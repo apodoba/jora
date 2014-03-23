@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.apodoba</groupId>
+    <artifactId>jora</artifactId>
+    <version>${myapp.version}</version>
+  </parent>
+  <groupId>com.apodoba</groupId>
+  <artifactId>core</artifactId>
+  <version>${myapp.version}</version>
+  <name>core</name>
+  <url>http://maven.apache.org</url>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencies>
+  <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>${mysql.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.liquibase</groupId>
+      <artifactId>liquibase-core</artifactId>
+      <version>${liquibase.core.version}</version>
+      <!--<scope>compile</scope>-->
+    </dependency>
+    <dependency>
+      <groupId>org.liquibase</groupId>
+      <artifactId>liquibase-plugin</artifactId>
+      <version>${liquibase.version}</version>
+    </dependency>
+  </dependencies>
+
+<build>
+    <finalName>core</finalName>
+    <plugins>
+       <plugin>
+         <groupId>org.liquibase</groupId>
+         <artifactId>liquibase-plugin</artifactId>
+         <version>1.6.1.0</version>
+         <executions>
+           <execution>
+             <phase>process-resources</phase>
+             <configuration>
+               <changeLogFile>src/main/resources/changelog.xml</changeLogFile>
+               <driver>com.mysql.jdbc.Driver</driver>
+               <url>jdbc:mysql://localhost:3306/mousedb</url>
+               <username>${user.name}</username>
+               <password>${user.pass}</password>
+             </configuration>
+             <goals>
+               <goal>update</goal>
+             </goals>
+           </execution>
+         </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

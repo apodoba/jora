@@ -17,11 +17,11 @@
   </properties>
 
   <dependencies>
-  <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-      <version>${mysql.version}</version>
-    </dependency>
+    <dependency>
+		<groupId>org.apache.derby</groupId>
+		<artifactId>derby</artifactId>
+		<version>10.8.2.2</version>
+		</dependency>
     <dependency>
       <groupId>org.liquibase</groupId>
       <artifactId>liquibase-core</artifactId>
@@ -47,8 +47,8 @@
              <phase>process-resources</phase>
              <configuration>
                <changeLogFile>src/main/resources/changelog.xml</changeLogFile>
-               <driver>com.mysql.jdbc.Driver</driver>
-               <url>jdbc:mysql://localhost:3306/mousedb</url>
+               <driver>org.apache.derby.jdbc.EmbeddedDriver</driver>
+               <url>jdbc:derby:D:\joradb;create=false</url>
                <username>${user.name}</username>
                <password>${user.pass}</password>
              </configuration>

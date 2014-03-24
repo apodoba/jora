@@ -4,6 +4,7 @@
 .project
 .classpath
 *.iml
+*.log
 .idea
 .metadata
 .springBeans

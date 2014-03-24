@@ -6,15 +6,14 @@
   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.6
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.6.xsd">
 
-    <changeSet id="1" author="apodoba" dbms="mysql">
-      <createTable tableName="department">
+    <changeSet id="23-03-2014_1" author="apodoba">
+      <createTable tableName="type">
          <column name="id" type="int">
              <constraints primaryKey="true" nullable="false"/>
          </column>
-         <column name="name" type="varchar(50)">
+         <column name="type" type="varchar(50)">
              <constraints nullable="false"/>
          </column>
-         <column name="active" type="boolean" defaultValue="1"/>
       </createTable>
     </changeSet>
  

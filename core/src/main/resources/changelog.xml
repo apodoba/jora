@@ -1,20 +1,132 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<databaseChangeLog
-  xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.6"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.6
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.6"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.6
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.6.xsd">
 
-    <changeSet id="23-03-2014_1" author="apodoba">
-      <createTable tableName="type">
-         <column name="id" type="int">
-             <constraints primaryKey="true" nullable="false"/>
-         </column>
-         <column name="type" type="varchar(50)">
-             <constraints nullable="false"/>
-         </column>
-      </createTable>
-    </changeSet>
- 
+	<changeSet id="23-03-2014_1" author="apodoba">
+		<createTable tableName="TYPE">
+			<column name="ID" type="int">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="TYPE" type="varchar(50)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet id="25-03-2014_2" author="apodoba">
+		<createTable tableName="STATUS">
+			<column name="ID" type="int">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="STATUS" type="varchar(50)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet id="25-03-2014_3" author="apodoba">
+		<createTable tableName="EMPLOYEE">
+			<column name="ID" type="int">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="NAME" type="varchar(50)">
+				<constraints nullable="false" />
+			</column>
+			<column name="POSITION" type="varchar(50)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet id="25-03-2014_4" author="apodoba">
+		<createTable tableName="TICKET">
+			<column name="ID" type="int">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="TYPE" type="integer">
+				<constraints nullable="false" foreignKeyName="FK_TYPE_ID" references="TYPE(ID)" />
+			</column>			
+			<column name="STATUS" type="integer">
+				<constraints nullable="false" foreignKeyName="FK_STATUS_ID" references="STATUS(ID)" />
+			</column>	
+			<column name="CREATED_EMPLOYEE" type="integer">
+				<constraints nullable="false" foreignKeyName="FK_CREATED_EMPLOYEE_ID" references="EMPLOYEE(ID)" />
+			</column>
+			<column name="ASSIGN_EMPLOYEE" type="integer">
+				<constraints nullable="false" foreignKeyName="FK_ASSIGN_EMPLOYEE_ID" references="EMPLOYEE(ID)" />
+			</column>
+		</createTable>
+	</changeSet>
+	
+	<changeSet id="25-03-2014_5" author="apodoba">
+		<createTable tableName="TIME_LOG">
+			<column name="ID" type="int">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="EMPLOYEE" type="integer">
+				<constraints nullable="false" foreignKeyName="FK_EMPLOYEE_ID" references="EMPLOYEE(ID)" />
+			</column>
+			<column name="TICKET" type="integer">
+				<constraints nullable="false" foreignKeyName="FK_TICKET_ID_LOG" references="TICKET(ID)" />
+			</column>
+			<column name="DATE" type="date">
+				<constraints nullable="false" />
+			</column>
+			<column name="MINUTES" type="integer">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+	
+	<changeSet id="25-03-2014_6" author="apodoba">
+		<createTable tableName="HIERARCHY">
+			<column name="ID" type="int">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="TICKET" type="integer">
+				<constraints nullable="false" foreignKeyName="FK_TICKET_ID" references="TICKET(ID)" />
+			</column>
+			<column name="PARENT" type="integer">
+				<constraints nullable="false" foreignKeyName="FK_PARENT_ID" references="TICKET(ID)" />
+			</column>
+		</createTable>
+	</changeSet>  
+	
+	<changeSet id="25-03-2014_7" author="apodoba">
+		<createTable tableName="RELATIONS">
+			<column name="ID" type="int">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="TICKET" type="integer">
+				<constraints nullable="false" foreignKeyName="FK_TICKET_ID_RELATIONS" references="TICKET(ID)" />
+			</column>
+			<column name="RELATED" type="integer">
+				<constraints nullable="false" foreignKeyName="FK_RELATED_ID" references="TICKET(ID)" />
+			</column>
+		</createTable>
+	</changeSet>  
+	
+	<changeSet id="25-03-2014_8" author="apodoba">
+		<createTable tableName="COMMENTS">
+			<column name="ID" type="int">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="EMPLOYEE" type="integer">
+				<constraints nullable="false" foreignKeyName="FK_EMPLOYEE_ID_COMMENTS" references="EMPLOYEE(ID)" />
+			</column>
+			<column name="TICKET" type="integer">
+				<constraints nullable="false" foreignKeyName="FK_TICKET_ID_COMMENTS" references="TICKET(ID)" />
+			</column>
+			<column name="COMMENT" type="varchar(2048)">
+				<constraints nullable="false" />
+			</column>
+			<column name="DATE" type="date">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>  
+
 </databaseChangeLog>

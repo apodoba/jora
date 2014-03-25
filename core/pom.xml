@@ -9,7 +9,6 @@
   </parent>
   <groupId>com.apodoba</groupId>
   <artifactId>core</artifactId>
-  <version>${myapp.version}</version>
   <name>core</name>
   <url>http://maven.apache.org</url>
   <properties>
@@ -48,7 +47,7 @@
              <configuration>
                <changeLogFile>src/main/resources/changelog.xml</changeLogFile>
                <driver>org.apache.derby.jdbc.EmbeddedDriver</driver>
-               <url>jdbc:derby:D:\joradb;create=false</url>
+               <url>jdbc:derby:/home/arina/derby/database/joradb;create=false</url>
                <username>${user.name}</username>
                <password>${user.pass}</password>
              </configuration>

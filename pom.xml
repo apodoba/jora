@@ -11,28 +11,23 @@
   <url>http://maven.apache.org</url>
 
   <modules>
+    <module>database</module>
     <module>core</module>
     <module>web</module>
   </modules>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <user.name>root</user.name>
-    <user.pass>1111</user.pass>
     <myapp.version>1.0-SNAPSHOT</myapp.version>
-    <junit.version>3.8.1</junit.version>
+    <junit.version>4.11</junit.version>
     <mysql.version>3.1.14</mysql.version>
     <liquibase.core.version>1.7.0</liquibase.core.version>
     <liquibase.version>1.7.0.0</liquibase.version>
+    <spring.version>3.2.4.RELEASE</spring.version>
+    <spring-security.version>3.1.4.RELEASE</spring-security.version>
   </properties>
 
   <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>${junit.version}</version>
-      <scope>test</scope>
-    </dependency>
   </dependencies>
-  
+
 </project>

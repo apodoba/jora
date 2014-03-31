@@ -16,80 +16,141 @@
   </properties>
 
   <dependencies>
-    <dependency>
-       <groupId>org.apache.derby</groupId>
-       <artifactId>derby</artifactId>
-       <version>10.8.2.2</version>
-    </dependency>
-    <dependency>
-      <groupId>org.liquibase</groupId>
-      <artifactId>liquibase-core</artifactId>
-      <version>${liquibase.core.version}</version>
-      <!--<scope>compile</scope>-->
-    </dependency>
-    <dependency>
-      <groupId>org.liquibase</groupId>
-      <artifactId>liquibase-plugin</artifactId>
-      <version>${liquibase.version}</version>
-    </dependency>
+      <dependency>
+          <groupId>junit</groupId>
+          <artifactId>junit</artifactId>
+          <version>${junit.version}</version>
+          <scope>test</scope>
+      </dependency>
+      <dependency>
+          <groupId>org.apache.derby</groupId>
+          <artifactId>derby</artifactId>
+          <version>10.8.2.2</version>
+      </dependency>
+      <dependency>
+          <groupId>org.hibernate</groupId>
+          <artifactId>hibernate-core</artifactId>
+          <version>4.2.0.Final</version>
+      </dependency>
+
+      <!-- spring -->
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-core</artifactId>
+          <version>${spring.version}</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-beans</artifactId>
+          <version>${spring.version}</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-context</artifactId>
+          <version>${spring.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-jdbc</artifactId>
+          <version>${spring.version}</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-tx</artifactId>
+          <version>${spring.version}</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-orm</artifactId>
+          <version>${spring.version}</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-context-support</artifactId>
+          <version>${spring.version}</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-test</artifactId>
+          <version>${spring.version}</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-web</artifactId>
+          <version>${spring.version}</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-webmvc</artifactId>
+          <version>${spring.version}</version>
+      </dependency>
+
+      <!-- Spring Security -->
+      <dependency>
+          <groupId>org.springframework.security</groupId>
+          <artifactId>spring-security-web</artifactId>
+          <version>${spring-security.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>org.springframework.security</groupId>
+          <artifactId>spring-security-core</artifactId>
+          <version>${spring-security.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>org.springframework.security</groupId>
+          <artifactId>spring-security-config</artifactId>
+          <version>${spring-security.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>org.springframework.security</groupId>
+          <artifactId>spring-security-cas</artifactId>
+          <version>${spring-security.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>org.springframework.security</groupId>
+          <artifactId>spring-security-taglibs</artifactId>
+          <version>${spring-security.version}</version>
+      </dependency>
+
+      <dependency>
+          <groupId>commons-fileupload</groupId>
+          <artifactId>commons-fileupload</artifactId>
+          <version>1.2</version>
+      </dependency>
+
   </dependencies>
 
 <build>
     <finalName>core</finalName>
     <plugins>
-       <plugin>
-         <groupId>org.liquibase</groupId>
-         <artifactId>liquibase-plugin</artifactId>
-         <version>1.6.1.0</version>
-         <executions>
-           <execution>
-             <phase>process-resources</phase>
-             <configuration>
-               <changeLogFile>src/main/resources/changelog.xml</changeLogFile>
-               <driver>org.apache.derby.jdbc.EmbeddedDriver</driver>
-               <url>jdbc:derby:/home/arina/derby/database/joradb;create=false</url>
-               <username>${user.name}</username>
-               <password>${user.pass}</password>
-             </configuration>
-             <goals>
-               <goal>update</goal>
-             </goals>
-           </execution>
-         </executions>
-      </plugin>
+
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>properties-maven-plugin</artifactId>
+            <version>1.0-alpha-1</version>
+            <executions>
+                <execution>
+                    <phase>initialize</phase>
+                    <goals>
+                        <goal>read-project-properties</goal>
+                    </goals>
+                    <configuration>
+                        <files>
+                            <file>${user.home}/jora-jdbc.properties</file>
+                        </files>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
     </plugins>
-    <pluginManagement>
-    	<plugins>
-    		<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
-    		<plugin>
-    			<groupId>org.eclipse.m2e</groupId>
-    			<artifactId>lifecycle-mapping</artifactId>
-    			<version>1.0.0</version>
-    			<configuration>
-    				<lifecycleMappingMetadata>
-    					<pluginExecutions>
-    						<pluginExecution>
-    							<pluginExecutionFilter>
-    								<groupId>org.liquibase</groupId>
-    								<artifactId>
-    									liquibase-plugin
-    								</artifactId>
-    								<versionRange>
-    									[1.6.1.0,)
-    								</versionRange>
-    								<goals>
-    									<goal>update</goal>
-    								</goals>
-    							</pluginExecutionFilter>
-    							<action>
-    								<ignore></ignore>
-    							</action>
-    						</pluginExecution>
-    					</pluginExecutions>
-    				</lifecycleMappingMetadata>
-    			</configuration>
-    		</plugin>
-    	</plugins>
-    </pluginManagement>
+
 </build>
 </project>

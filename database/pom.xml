@@ -68,7 +68,7 @@
 						<configuration>
 							<changeLogFile>${project.basedir}/src/main/structure/changelog.xml</changeLogFile>
 							<driver>org.apache.derby.jdbc.EmbeddedDriver</driver>
-							<url>jdbc:derby:${db.name};create=true</url>
+							<url>jdbc:derby://localhost:1527/${db.name};create=true</url>
 							<username>${db.username}</username>
 							<password>${db.password}</password>
 						</configuration>

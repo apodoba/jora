@@ -24,7 +24,7 @@
     <!-- Непосредственно бин dataSource -->
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource"
-          p:driverClassName="${db.driverClassName}" p:url="jdbc:derby:${db.name};create=true"
+          p:driverClassName="${db.driverClassName}" p:url="jdbc:derby://localhost:1527/${db.name};create=true"
           p:username="${db.username}" p:password="${db.password}" />
 
 

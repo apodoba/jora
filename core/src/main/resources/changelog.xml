@@ -128,5 +128,21 @@
 			</column>
 		</createTable>
 	</changeSet>  
+	
+	<changeSet id="2014-04-06_01" author="apodoba">
+        <createSequence sequenceName="USERS_SEQ" startValue="1000" incrementBy="1" />
+    </changeSet>
+    
+    <changeSet id="2014-04-06_02" author="apodoba">
+        <createSequence sequenceName="COMMENTS_SEQ" startValue="1000" incrementBy="1" />
+    </changeSet>
+    
+    <changeSet id="2014-04-06_03" author="apodoba">
+        <createSequence sequenceName="TICKET_SEQ" startValue="1000" incrementBy="1" />
+    </changeSet>
+    
+    <changeSet id="2014-04-06_04" author="apodoba">
+        <createSequence sequenceName="TIME_LOG_SEQ" startValue="1000" incrementBy="1" />
+    </changeSet>
 
 </databaseChangeLog>

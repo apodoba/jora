@@ -23,6 +23,11 @@
 			<version>10.8.2.2</version>
 		</dependency>
 		<dependency>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derbyclient</artifactId>
+			<version>10.8.2.2</version>
+		</dependency>
+		<dependency>
 			<groupId>org.liquibase</groupId>
 			<artifactId>liquibase-core</artifactId>
 			<version>${liquibase.core.version}</version>
@@ -67,7 +72,7 @@
 						<phase>process-resources</phase>
 						<configuration>
 							<changeLogFile>${project.basedir}/src/main/structure/changelog.xml</changeLogFile>
-							<driver>org.apache.derby.jdbc.EmbeddedDriver</driver>
+							<driver>${db.driverClassName}</driver>
 							<url>jdbc:derby://localhost:1527/${db.name};create=true</url>
 							<username>${db.username}</username>
 							<password>${db.password}</password>

@@ -1,14 +1,14 @@
 package com.apodoba;
 
-import com.apodoba.dao.TestDao;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.apodoba.dao.TestDao;
 
 /**
  * Unit test for simple App.
@@ -21,10 +21,18 @@ public class AppTest{
     @Autowired
     TestDao testDao;
 
-
     @Test
-    @Ignore
     public void countOfTypes(){
         Assert.assertEquals(0, testDao.getTypesCount());
+    }
+    
+    @Test
+    public void getTicketsCount(){
+        Assert.assertEquals(0, testDao.getTicketsCount());
+    }
+    
+    @Test
+    public void getUsersCount(){
+        Assert.assertEquals(0, testDao.getUsersCount());
     }
 }

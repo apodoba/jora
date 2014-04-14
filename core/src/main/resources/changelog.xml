@@ -145,4 +145,12 @@
         <createSequence sequenceName="TIME_LOG_SEQ" startValue="1000" incrementBy="1" />
     </changeSet>
 
+    <changeSet id="2014-04-14_01" author="apodoba">
+        <addColumn tableName="TICKET">
+            <column name="DESCRIPTION" type="varchar(2048)">
+                <constraints nullable="false" />
+            </column>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>

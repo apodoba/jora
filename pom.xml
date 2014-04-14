@@ -25,6 +25,7 @@
     <liquibase.version>1.7.0.0</liquibase.version>
     <spring.version>3.2.4.RELEASE</spring.version>
     <spring-security.version>3.1.4.RELEASE</spring-security.version>
+    <derby.version>10.8.2.2</derby.version>
   </properties>
 
   <dependencies>

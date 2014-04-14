@@ -1,0 +1,5 @@
+INSERT INTO EMPLOYEE VALUES (1, 'Petrov Igor', 'Developer');
+INSERT INTO EMPLOYEE VALUES (2, 'Ivanov Ivan', 'Developer');
+INSERT INTO EMPLOYEE VALUES (3, 'Sverdlov Petro', 'QA');
+INSERT INTO EMPLOYEE VALUES (4, 'Pipkina Inna', 'QA');
+INSERT INTO EMPLOYEE VALUES (5, 'Boss Boss', 'PM');

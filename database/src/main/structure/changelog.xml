@@ -1,9 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.6"
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.6
-         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.6.xsd">
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
 	<changeSet id="23-03-2014_1" author="apodoba">
 		<createTable tableName="TYPE">
@@ -47,30 +45,36 @@
 				<constraints primaryKey="true" nullable="false" />
 			</column>
 			<column name="TYPE" type="integer">
-				<constraints nullable="false" foreignKeyName="FK_TYPE_ID" references="TYPE(ID)" />
-			</column>			
+				<constraints nullable="false" foreignKeyName="FK_TYPE_ID"
+					references="TYPE(ID)" />
+			</column>
 			<column name="STATUS" type="integer">
-				<constraints nullable="false" foreignKeyName="FK_STATUS_ID" references="STATUS(ID)" />
-			</column>	
+				<constraints nullable="false" foreignKeyName="FK_STATUS_ID"
+					references="STATUS(ID)" />
+			</column>
 			<column name="CREATED_EMPLOYEE" type="integer">
-				<constraints nullable="false" foreignKeyName="FK_CREATED_EMPLOYEE_ID" references="EMPLOYEE(ID)" />
+				<constraints nullable="false" foreignKeyName="FK_CREATED_EMPLOYEE_ID"
+					references="EMPLOYEE(ID)" />
 			</column>
 			<column name="ASSIGN_EMPLOYEE" type="integer">
-				<constraints nullable="false" foreignKeyName="FK_ASSIGN_EMPLOYEE_ID" references="EMPLOYEE(ID)" />
+				<constraints nullable="false" foreignKeyName="FK_ASSIGN_EMPLOYEE_ID"
+					references="EMPLOYEE(ID)" />
 			</column>
 		</createTable>
 	</changeSet>
-	
+
 	<changeSet id="25-03-2014_5" author="apodoba">
 		<createTable tableName="TIME_LOG">
 			<column name="ID" type="int">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
 			<column name="EMPLOYEE" type="integer">
-				<constraints nullable="false" foreignKeyName="FK_EMPLOYEE_ID" references="EMPLOYEE(ID)" />
+				<constraints nullable="false" foreignKeyName="FK_EMPLOYEE_ID"
+					references="EMPLOYEE(ID)" />
 			</column>
 			<column name="TICKET" type="integer">
-				<constraints nullable="false" foreignKeyName="FK_TICKET_ID_LOG" references="TICKET(ID)" />
+				<constraints nullable="false" foreignKeyName="FK_TICKET_ID_LOG"
+					references="TICKET(ID)" />
 			</column>
 			<column name="DATE" type="date">
 				<constraints nullable="false" />
@@ -80,45 +84,54 @@
 			</column>
 		</createTable>
 	</changeSet>
-	
+
 	<changeSet id="25-03-2014_6" author="apodoba">
 		<createTable tableName="HIERARCHY">
 			<column name="ID" type="int">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
 			<column name="TICKET" type="integer">
-				<constraints nullable="false" foreignKeyName="FK_TICKET_ID" references="TICKET(ID)" />
+				<constraints nullable="false" foreignKeyName="FK_TICKET_ID"
+					references="TICKET(ID)" />
 			</column>
 			<column name="PARENT" type="integer">
-				<constraints nullable="false" foreignKeyName="FK_PARENT_ID" references="TICKET(ID)" />
+				<constraints nullable="false" foreignKeyName="FK_PARENT_ID"
+					references="TICKET(ID)" />
 			</column>
 		</createTable>
-	</changeSet>  
-	
+	</changeSet>
+
 	<changeSet id="25-03-2014_7" author="apodoba">
 		<createTable tableName="RELATIONS">
 			<column name="ID" type="int">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
 			<column name="TICKET" type="integer">
-				<constraints nullable="false" foreignKeyName="FK_TICKET_ID_RELATIONS" references="TICKET(ID)" />
+				<constraints nullable="false" foreignKeyName="FK_TICKET_ID_RELATIONS"
+					references="TICKET(ID)" />
 			</column>
 			<column name="RELATED" type="integer">
-				<constraints nullable="false" foreignKeyName="FK_RELATED_ID" references="TICKET(ID)" />
+				<constraints nullable="false" foreignKeyName="FK_RELATED_ID"
+					references="TICKET(ID)" />
+			</column>
+			<column name="DESCRIPTION" type="varchar(2048)">
+				<constraints nullable="false" />
 			</column>
 		</createTable>
-	</changeSet>  
-	
+	</changeSet>
+
 	<changeSet id="25-03-2014_8" author="apodoba">
 		<createTable tableName="COMMENTS">
 			<column name="ID" type="int">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
 			<column name="EMPLOYEE" type="integer">
-				<constraints nullable="false" foreignKeyName="FK_EMPLOYEE_ID_COMMENTS" references="EMPLOYEE(ID)" />
+				<constraints nullable="false" foreignKeyName="FK_EMPLOYEE_ID_COMMENTS"
+					references="EMPLOYEE(ID)" />
 			</column>
 			<column name="TICKET" type="integer">
-				<constraints nullable="false" foreignKeyName="FK_TICKET_ID_COMMENTS" references="TICKET(ID)" />
+				<constraints nullable="false" foreignKeyName="FK_TICKET_ID_COMMENTS"
+					references="TICKET(ID)" />
 			</column>
 			<column name="COMMENT" type="varchar(2048)">
 				<constraints nullable="false" />
@@ -127,6 +140,30 @@
 				<constraints nullable="false" />
 			</column>
 		</createTable>
-	</changeSet>  
+	</changeSet>
 
+	<changeSet id="2014-04-06_01" author="apodoba">
+		<sql>
+			CREATE SEQUENCE USERS_SEQ START WITH 1000;
+		</sql>
+	</changeSet>
+
+	<changeSet id="2014-04-06_02" author="apodoba">
+		<sql>
+			CREATE SEQUENCE COMMENTS_SEQ START WITH 1000;
+		</sql>
+	</changeSet>
+
+	<changeSet id="2014-04-06_03" author="apodoba">
+		<sql>
+			CREATE SEQUENCE TICKET_SEQ START WITH 1000;
+		</sql>
+	</changeSet>
+
+	<changeSet id="2014-04-06_04" author="apodoba">
+		<sql>
+			CREATE SEQUENCE TIME_LOG_SEQ START WITH 1000;
+		</sql>
+	</changeSet>
+	
 </databaseChangeLog>

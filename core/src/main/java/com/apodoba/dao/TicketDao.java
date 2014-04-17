@@ -12,8 +12,8 @@ import java.util.List;
  */
 public interface TicketDao {
 
-    public List<Ticket> getAllTickets();
-    public List<Ticket> getAllTicketsByUser(User user);
-    public List<Ticket> getAllTicketsByType(Type type);
-    public List<Ticket> getAllTicketsByStatus(Status type);
+    List<Ticket> getAllTickets();
+    List<Ticket> getAllTicketsByUser(User user);
+    List<Ticket> getAllTicketsByType(Type type);
+    List<Ticket> getAllTicketsByStatus(Status type);
 }

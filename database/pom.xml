@@ -30,12 +30,12 @@
 		<dependency>
 			<groupId>org.liquibase</groupId>
 			<artifactId>liquibase-core</artifactId>
-			<version>${liquibase.core.version}</version>
+			<version>${liquibase.version}</version>
 			<!--<scope>compile</scope> -->
 		</dependency>
 		<dependency>
 			<groupId>org.liquibase</groupId>
-			<artifactId>liquibase-plugin</artifactId>
+			<artifactId>liquibase-maven-plugin</artifactId>
 			<version>${liquibase.version}</version>
 		</dependency>
 	</dependencies>
@@ -62,11 +62,35 @@
 					</execution>
 				</executions>
 			</plugin>
-
+			
+			<plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>${liquibase.version}</version>
+                <configuration>
+                    <url>jdbc:derby://localhost:1527/${db.name};create=true</url>
+                    <driver>${db.driverClassName}</driver>
+                    <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
+                    <username>${db.username}</username>
+                    <password>${db.password}</password>
+                    <changeLogFile>${project.basedir}/src/main/structure/changelog.xml</changeLogFile>
+                    <skip>${skipDbChanges}</skip>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>it</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>update</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+<!-- 
 			<plugin>
 				<groupId>org.liquibase</groupId>
 				<artifactId>liquibase-plugin</artifactId>
-				<version>1.6.1.0</version>
+				<version>${liquibase.version}</version>
 				<executions>
 					<execution>
 						<phase>process-resources</phase>
@@ -82,15 +106,27 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
+			</plugin> -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>sql-maven-plugin</artifactId>
 
+				<dependencies>
+				<dependency>
+					<groupId>org.apache.derby</groupId>
+					<artifactId>derby</artifactId>
+					<version>${derby.version}</version>
+				</dependency>
+					<dependency>
+						<groupId>org.apache.derby</groupId>
+						<artifactId>derbyclient</artifactId>
+						<version>${derby.version}</version>
+					</dependency>
+				</dependencies>
                 <configuration>
                     <autocommit>true</autocommit>
                     <driver>${db.driverClassName}</driver>
-                    <url>jdbc:derby:${db.name};create=false</url>
+                    <url>jdbc:derby://localhost:1527/${db.name};create=true</url>
                     <username>${db.username}</username>
                     <password>${db.password}</password>
                     <skip>${maven.test.skip}</skip>
@@ -99,9 +135,14 @@
                 <executions>
                     <execution>
                         <id>default-cli</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
                         <configuration>
                             <autocommit>true</autocommit>
                             <orderFile>ascending</orderFile>
+                            <forceMojoExecution>true</forceMojoExecution>
                             <fileset>
                                 <basedir>${project.basedir}/src/test/resources/sql</basedir>
                                 <includes>

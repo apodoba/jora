@@ -60,6 +60,9 @@
 				<constraints nullable="false" foreignKeyName="FK_ASSIGN_EMPLOYEE_ID"
 					references="EMPLOYEE(ID)" />
 			</column>
+            <column name="DESCRIPTION" type="varchar(2048)">
+                <constraints nullable="false" />
+            </column>
 		</createTable>
 	</changeSet>
 
@@ -113,9 +116,6 @@
 			<column name="RELATED" type="integer">
 				<constraints nullable="false" foreignKeyName="FK_RELATED_ID"
 					references="TICKET(ID)" />
-			</column>
-			<column name="DESCRIPTION" type="varchar(2048)">
-				<constraints nullable="false" />
 			</column>
 		</createTable>
 	</changeSet>

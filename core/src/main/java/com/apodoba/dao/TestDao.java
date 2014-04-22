@@ -16,10 +16,6 @@ public class TestDao {
 
     @Autowired
     private SessionFactory sessionFactory;
-
-    public int getTypesCount(){
-        return sessionFactory.getCurrentSession().createCriteria(Type.class).list().size();
-    }
     
     public int getTicketsCount(){
         return sessionFactory.getCurrentSession().createCriteria(Ticket.class).list().size();

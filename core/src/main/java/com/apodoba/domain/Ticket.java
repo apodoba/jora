@@ -28,11 +28,11 @@ public class Ticket {
 	private Integer id;
 
 	@Column(name = "TYPE")
-	@Enumerated(EnumType.STRING)
-	private Type userRole;
+	@Enumerated(EnumType.ORDINAL)
+	private Type type;
 
 	@Column(name = "STATUS")
-	@Enumerated(EnumType.STRING)
+	@Enumerated(EnumType.ORDINAL)
 	private Status status;
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -64,11 +64,11 @@ public class Ticket {
 	}
 
 	public Type getUserRole() {
-		return userRole;
+		return type;
 	}
 
-	public void setUserRole(Type userRole) {
-		this.userRole = userRole;
+	public void setUserRole(Type type) {
+		this.type = type;
 	}
 
 	public Status getStatus() {

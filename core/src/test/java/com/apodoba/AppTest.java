@@ -20,19 +20,14 @@ public class AppTest{
 
     @Autowired
     TestDao testDao;
-
-    @Test
-    public void countOfTypes(){
-        Assert.assertEquals(0, testDao.getTypesCount());
-    }
     
     @Test
     public void getTicketsCount(){
-        Assert.assertEquals(0, testDao.getTicketsCount());
+        Assert.assertEquals(5, testDao.getTicketsCount());
     }
     
     @Test
     public void getUsersCount(){
-        Assert.assertEquals(0, testDao.getUsersCount());
+        Assert.assertEquals(5, testDao.getUsersCount());
     }
 }

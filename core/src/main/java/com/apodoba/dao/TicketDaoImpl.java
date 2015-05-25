@@ -4,7 +4,10 @@ import com.apodoba.domain.Status;
 import com.apodoba.domain.Ticket;
 import com.apodoba.domain.Type;
 import com.apodoba.domain.User;
+
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -19,23 +22,43 @@ public class TicketDaoImpl implements TicketDao {
     @Autowired
     private SessionFactory sessionFactory;
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public List<Ticket> getAllTickets() {
         return sessionFactory.getCurrentSession().createCriteria(Ticket.class).list();
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public List<Ticket> getAllTicketsByUser(User user) {
-        return null;
+    	Criteria ticketCriteria = sessionFactory.getCurrentSession().createCriteria(Ticket.class);
+    	ticketCriteria.add(Restrictions.eq("assignUser", user));
+    	return ticketCriteria.list();
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public List<Ticket> getAllTicketsByType(Type type) {
-        return null;
+    	Criteria ticketCriteria = sessionFactory.getCurrentSession().createCriteria(Ticket.class);
+    	ticketCriteria.add(Restrictions.eq("type", type));
+    	return ticketCriteria.list();
     }
 
-    @Override
-    public List<Ticket> getAllTicketsByStatus(Status type) {
-        return null;
+    @SuppressWarnings("unchecked")
+	@Override
+    public List<Ticket> getAllTicketsByStatus(Status status) {
+    	Criteria ticketCriteria = sessionFactory.getCurrentSession().createCriteria(Ticket.class);
+    	ticketCriteria.add(Restrictions.eq("status", status));
+    	return ticketCriteria.list();
     }
+
+	@Override
+	public boolean addTicket(Ticket ticket) {
+		return sessionFactory.getCurrentSession().save(ticket) != null ? true: false;
+	}
+
+	@Override
+	public void updateTicket(Ticket ticket) {
+		sessionFactory.getCurrentSession().update(ticket);
+	}
 }

@@ -1,12 +1,11 @@
 package com.apodoba.dao;
 
-import com.apodoba.domain.Ticket;
-import com.apodoba.domain.Type;
-import com.apodoba.domain.User;
-
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.apodoba.domain.Ticket;
+import com.apodoba.domain.User;
 
 /**
  * Created by apodoba on 3/31/14.

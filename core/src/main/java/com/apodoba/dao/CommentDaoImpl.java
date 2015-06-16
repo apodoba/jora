@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.apodoba.domain.Comments;
 import com.apodoba.domain.Ticket;
+import com.apodoba.domain.User;
 
 public class CommentDaoImpl implements CommentDao{
 	
@@ -29,8 +30,17 @@ public class CommentDaoImpl implements CommentDao{
 	}
 
 	@Override
-	public void update(Comments comment) {
+	public boolean update(Comments comment) {
 		sessionFactory.getCurrentSession().update(comment);		
+		return true;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Comments> getAllCommentsByUser(User user) {
+		Criteria commentsCriteria = sessionFactory.getCurrentSession().createCriteria(Comments.class);
+		commentsCriteria.add(Restrictions.eq("user", user));
+		return commentsCriteria.list();
 	}
 	
 	

@@ -15,6 +15,7 @@
     <module>core</module>
     <module>web</module>
     <module>service</module>
+    <module>web2</module>
   </modules>
 
   <properties>

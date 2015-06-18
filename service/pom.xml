@@ -135,7 +135,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>core</finalName>
+		<finalName>service</finalName>
 		<plugins>
 
 			<plugin>

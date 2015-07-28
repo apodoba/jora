@@ -26,10 +26,16 @@
     <spring.version>3.2.4.RELEASE</spring.version>
     <spring-security.version>3.1.4.RELEASE</spring-security.version>
     <derby.version>10.10.1.1</derby.version>
+    <jackson.version>2.2.3</jackson.version>
   </properties>
 
   <dependencyManagement>
 	<dependencies>
+		 <dependency>
+            		<groupId>com.fasterxml.jackson.core</groupId>
+            		<artifactId>jackson-databind</artifactId>
+            		<version>${jackson.version}</version>
+       		</dependency>
 		<dependency>
 			<groupId>org.apache.derby</groupId>
 			<artifactId>derby</artifactId>

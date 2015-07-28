@@ -22,4 +22,9 @@ public class UserDaoImpl implements UserDao {
     public List<User> getAllUsers() {
         return sessionFactory.getCurrentSession().createCriteria(User.class).list();
     }
+
+	@Override
+	public User getUserById(Long id) {
+		return (User) sessionFactory.getCurrentSession().get(User.class, id);
+	}
 }

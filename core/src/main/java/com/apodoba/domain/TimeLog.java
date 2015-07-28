@@ -20,7 +20,7 @@ public class TimeLog {
 	@Column(name = "ID")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="timelog_seq_gen")
 	@SequenceGenerator(name="timelog_seq_gen", sequenceName="TIME_LOG_SEQ")
-	private Integer id;
+	private Long id;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "EMPLOYEE", nullable = false)
@@ -36,11 +36,11 @@ public class TimeLog {
 	@Column(name="MINUTES")
 	private int minutes;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

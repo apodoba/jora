@@ -20,7 +20,7 @@ public class Comments {
 	@Column(name = "ID")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="comments_seq_gen")
 	@SequenceGenerator(name="comments_seq_gen", sequenceName="COMMENTS_SEQ")
-	private Integer id;
+	private Long id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "EMPLOYEE", nullable = false)
@@ -36,11 +36,11 @@ public class Comments {
 	@Column(name = "DATE")
 	private Date date;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

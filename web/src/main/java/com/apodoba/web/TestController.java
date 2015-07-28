@@ -7,13 +7,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.apodoba.service.TestService;
 
 @Controller
-@RequestMapping(value = "/test")
 public class TestController {
 
 	@Autowired
 	private TestService testService;
-
-	@RequestMapping(value = "/tickets")
+	
+	@RequestMapping("/")
+    public String home() {
+		System.out.println(testService.getAllTickets().size());
+		return "views";
+    }    
+    
+	@RequestMapping(value = "/test/tickets")
 	public int getAllTickets() {
 		return testService.getAllTickets().size();
 	}

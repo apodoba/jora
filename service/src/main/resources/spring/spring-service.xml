@@ -6,9 +6,6 @@
 	http://www.springframework.org/schema/context
 	http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 
-    <context:annotation-config/>
-    <context:component-scan base-package="com.apodoba" />
-
-    <import resource="data-context.xml"/> 
+    <import resource="classpath:spring/spring.xml"/> 
 
 </beans>

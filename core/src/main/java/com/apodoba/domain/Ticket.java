@@ -25,7 +25,7 @@ public class Ticket {
 	@Column(name = "ID")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ticket_seq_gen")
 	@SequenceGenerator(name="ticket_seq_gen", sequenceName="TICKET_SEQ")
-	private Integer id;
+	private Long id;
 
 	@Column(name = "TYPE")
 	@Enumerated(EnumType.ORDINAL)
@@ -55,11 +55,11 @@ public class Ticket {
 	@JoinTable(name = "RELATIONS", joinColumns = { @JoinColumn(name = "TICKET") }, inverseJoinColumns = { @JoinColumn(name = "RELATED") })
 	private List<Ticket> relatedTickets;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

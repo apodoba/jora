@@ -6,11 +6,13 @@ import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.apodoba.domain.Comments;
 import com.apodoba.domain.Ticket;
 import com.apodoba.domain.User;
 
+@Repository
 public class CommentDaoImpl implements CommentDao{
 	
 	@Autowired
@@ -30,9 +32,8 @@ public class CommentDaoImpl implements CommentDao{
 	}
 
 	@Override
-	public boolean update(Comments comment) {
+	public void update(Comments comment) {
 		sessionFactory.getCurrentSession().update(comment);		
-		return true;
 	}
 
 	@SuppressWarnings("unchecked")

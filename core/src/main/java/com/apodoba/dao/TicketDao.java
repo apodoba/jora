@@ -12,16 +12,16 @@ import java.util.List;
  */
 public interface TicketDao {
 
-	public List<Ticket> getAllTickets();
+	List<Ticket> getAllTickets();
 
-	public List<Ticket> getAllTicketsByUser(User user);
+	List<Ticket> getAllTicketsByUser(User user);
 
-	public List<Ticket> getAllTicketsByType(Type type);
+	List<Ticket> getAllTicketsByType(Type type);
 
-	public List<Ticket> getAllTicketsByStatus(Status status);
+	List<Ticket> getAllTicketsByStatus(Status status);
 
-	public boolean addTicket(Ticket ticket);
+	boolean addTicket(Ticket ticket);
 
-	public void updateTicket(Ticket ticket);
+	void updateTicket(Ticket ticket);
 
 }

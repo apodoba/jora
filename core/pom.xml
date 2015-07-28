@@ -125,6 +125,11 @@
 			<artifactId>spring-security-taglibs</artifactId>
 			<version>${spring-security.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.apodoba</groupId>
+			<artifactId>database</artifactId>
+			<version>${myapp.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>

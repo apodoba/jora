@@ -5,6 +5,9 @@
 
 	<!-- Разрешаем использование аннотаций Spring MVC (то есть @Controller и.т.д) -->
 	<annotation-driven />
+	
+	<resources mapping="/images/**" location="/images/"/>
+	
 	<beans:bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />

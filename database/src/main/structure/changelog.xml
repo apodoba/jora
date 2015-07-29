@@ -25,6 +25,17 @@
 		</createTable>
 	</changeSet>
 
+	<changeSet id="29-07-2015_2" author="apodoba">
+		<createTable tableName="PRIORITY">
+			<column name="ID" type="int">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="PRIORITY" type="varchar(50)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+
 	<changeSet id="25-03-2014_3" author="apodoba">
 		<createTable tableName="EMPLOYEE">
 			<column name="ID" type="int">
@@ -39,10 +50,17 @@
 		</createTable>
 	</changeSet>
 
-	<changeSet id="25-03-2014_4" author="apodoba">
+	<changeSet id="29-07-2015_1" author="apodoba">
 		<createTable tableName="TICKET">
 			<column name="ID" type="int">
 				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="NAME" type="varchar(1024)">
+				<constraints nullable="false" />
+			</column>
+			<column name="PRIORITY" type="integer">
+				<constraints nullable="false" foreignKeyName="FK_PRIORITY_ID"
+					references="PRIORITY(ID)" />
 			</column>
 			<column name="TYPE" type="integer">
 				<constraints nullable="false" foreignKeyName="FK_TYPE_ID"
@@ -60,9 +78,9 @@
 				<constraints nullable="false" foreignKeyName="FK_ASSIGN_EMPLOYEE_ID"
 					references="EMPLOYEE(ID)" />
 			</column>
-            <column name="DESCRIPTION" type="varchar(2048)">
-                <constraints nullable="false" />
-            </column>
+			<column name="DESCRIPTION" type="varchar(2048)">
+				<constraints nullable="false" />
+			</column>
 		</createTable>
 	</changeSet>
 
@@ -165,5 +183,23 @@
 			CREATE SEQUENCE TIME_LOG_SEQ START WITH 1000;
 		</sql>
 	</changeSet>
-	
+
+	<changeSet id="2015-07-29_01" author="apodoba">
+		<sql>
+			CREATE SEQUENCE STATUS_SEQ START WITH 1000;
+		</sql>
+	</changeSet>
+
+	<changeSet id="2015-07-29_02" author="apodoba">
+		<sql>
+			CREATE SEQUENCE TYPE_SEQ START WITH 1000;
+		</sql>
+	</changeSet>
+
+	<changeSet id="2015-07-29_03" author="apodoba">
+		<sql>
+			CREATE SEQUENCE PRIORITY_SEQ START WITH 1000;
+		</sql>
+	</changeSet>
+
 </databaseChangeLog>

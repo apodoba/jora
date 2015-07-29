@@ -145,6 +145,7 @@
                                     <include>2.0-status.sql</include>
                                     <include>3.0-type.sql</include>
                                     <include>4.0-employee.sql</include>
+                                    <include>4.1-priority.sql</include>
                                     <include>5.0-ticket.sql</include>
                                     <include>6.0-timeLog.sql</include>
                                     <include>7.0-hierarchy.sql</include>

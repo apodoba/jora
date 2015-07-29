@@ -1,5 +1,7 @@
 package com.apodoba.domain;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,7 +12,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "EMPLOYEE")
-public class User {
+public class User implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6519287956373980797L;
+
 	@Id
 	@Column(name = "ID")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="users_seq_gen")

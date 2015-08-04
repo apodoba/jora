@@ -1,0 +1,166 @@
+<div class="container"
+	style="background-color: #f8f8f8; padding-bottom: 20px;">
+
+	<h1>{{ ticket.name }}</h1>
+
+
+	<div class="container" style="background-color: white;">
+		<div style="display: inline-flex;">
+			<!-- Details -->
+			<div class="container" style="background-color: white;">
+				<hr>
+				<button type="button" class="btn-sm"
+					style="border: 0px; background-color: white; outline: none; width: 100%;"
+					data-target="#details" data-toggle="collapse"
+					ng-click="changeCollapseIcon('detailsIcon')">
+					<h3 style="text-align: left;">
+						<span id="detailsIcon" class="glyphicon glyphicon-hand-up"
+							aria-hidden="true"></span> Details
+					</h3>
+				</button>
+
+				<div class="container collapse in" id="details">
+					<div>
+						<table>
+							<tr style="background-color: white;">
+								<td>
+									<table class="details">
+										<tr>
+											<td>Type:</td>
+											<td><img
+												data-ng-src="resources/images/type/{{ticket.type.type}}.png"
+												class="img-circle">{{ticket.type.type}}</td>
+										</tr>
+										<tr>
+											<td>Environment:</td>
+											<td>Windows XP SP 3</td>
+										</tr>
+										<tr>
+											<td>Priority:</td>
+											<td><img
+												data-ng-src="resources/images/priority/{{ticket.priority.priority}}.png"
+												class="img-circle">{{ticket.priority.priority}}</td>
+										</tr>
+									</table>
+								</td>
+								<td>
+									<table class="details" style="margin-right: 50px">
+										<tr>
+											<td>Status:</td>
+											<td>{{ticket.status.status}}</td>
+										</tr>
+										<tr>
+										<tr>
+											<td>Resolution:</td>
+											<td>Unresolved</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+					</div>
+
+				</div>
+			</div>
+
+
+			<!-- People and Dates -->
+			<div class="container" style="background-color: white;">
+				<!-- People -->
+				<div class="container" style="background-color: white;">
+					<hr style="margin-top: 5px; margin-bottom: 5px;">
+					<button type="button" class="btn-sm"
+						style="border: 0px; background-color: white; outline: none; width: 100%;"
+						data-target="#people" data-toggle="collapse"
+						ng-click="changeCollapseIcon('peopleIcon')">
+						<h5 style="text-align: left;">
+							<span id="peopleIcon" class="glyphicon glyphicon-hand-up"
+								aria-hidden="true"></span> People
+						</h5>
+					</button>
+
+					<div class="container collapse in" id="people">
+						<div>
+							<table class="small-details">
+								<tr>
+									<td>Assignee:</td>
+									<td>{{ ticket.assignUser.name }}</td>
+								</tr>
+								<tr>
+									<td>Reporter:</td>
+									<td>{{ ticket.createdUser.name }}</td>
+								</tr>
+							</table>
+						</div>
+
+					</div>
+				</div>
+
+				<!-- Dates -->
+				<div class="container" style="background-color: white;">
+					<hr style="margin-top: 5px; margin-bottom: 5px;">
+					<button type="button" class="btn-sm"
+						style="border: 0px; background-color: white; outline: none; width: 100%;"
+						data-target="#dates" data-toggle="collapse"
+						ng-click="changeCollapseIcon('datesIcon')">
+						<h5 style="text-align: left;">
+							<span id="datesIcon" class="glyphicon glyphicon-hand-up"
+								aria-hidden="true"></span> Dates
+						</h5>
+					</button>
+
+					<div class="container collapse in" id="dates">
+						<div>
+							<table class="small-details">
+								<tr>
+									<td>Created:</td>
+									<td>2014-08-03 14:15:10</td>
+								</tr>
+								<tr>
+									<td>Updated:</td>
+									<td>2014-08-04 00:15:10</td>
+								</tr>
+							</table>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Description -->
+	<div class="container" style="background-color: white;">
+		<hr>
+		<button type="button" class="btn-sm"
+			style="border: 0px; background-color: white; outline: none; width: 100%;"
+			data-target="#description" data-toggle="collapse"
+			ng-click="changeCollapseIcon('descriptionIcon')">
+			<h3 style="text-align: left;">
+				<span id="descriptionIcon" class="glyphicon glyphicon-hand-up"
+					aria-hidden="true"></span> Description
+			</h3>
+		</button>
+		<div class="container collapse in" id="description"
+			style="margin: 10px">
+			<textarea rows="4" style="width: 100%" readonly>{{ ticket.description }}</textarea>
+		</div>
+
+	</div>
+
+	<!-- Comments -->
+	<div class="container" style="background-color: white;">
+		<hr>
+		<button type="button" class="btn-sm"
+			style="border: 0px; background-color: white; outline: none; width: 100%;"
+			data-target="#comments" data-toggle="collapse"
+			ng-click="changeCollapseIcon('commentsIcon')">
+			<h3 style="text-align: left;">
+				<span id="commentsIcon" class="glyphicon glyphicon-hand-up"
+					aria-hidden="true"></span> Comments
+			</h3>
+		</button>
+		<div class="container collapse in" id="comments" style="margin: 10px">
+		</div>
+
+	</div>
+</div>

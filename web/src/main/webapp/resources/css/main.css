@@ -1,0 +1,39 @@
+table tr:nth-child(odd) {
+	background-color: #f9f9f9;
+}
+
+table tbody>tr>th {
+	background-color: #f1f1f1"
+}
+
+table.details {
+	margin-right: 150px;
+}
+
+table.details td {
+	margin: 5px;
+	padding: 5px;
+	padding-right: 20px;
+	background-color: white;
+}
+
+table.details tr {
+	background-color: white;
+}
+
+table.small-details {
+	margin-right: 20px;
+}
+
+table.small-details td {
+	margin: 5px;
+	padding: 5px;
+	padding-right: 5px;
+	background-color: white;
+}
+
+table.small-details tr {
+	background-color: white;
+}
+
+

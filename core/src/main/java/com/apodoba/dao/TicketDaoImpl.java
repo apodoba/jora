@@ -61,4 +61,15 @@ public class TicketDaoImpl implements TicketDao {
 	public void updateTicket(Ticket ticket) {
 		sessionFactory.getCurrentSession().update(ticket);
 	}
+
+	@Override
+	public Ticket getTicketById(Long ticketId) {
+		Ticket ticket = (Ticket) sessionFactory.getCurrentSession().get(Ticket.class, ticketId);
+		long assignUserId = ticket.getAssignUser()!= null ? ticket.getAssignUser().getId() : -1;
+		ticket.getCreatedUser().getId();
+		ticket.getChildren().size();
+		long parentTicketId = ticket.getParent()!= null ? ticket.getParent().getId() : -1;
+		ticket.getRelatedTickets().size();
+		return ticket;
+	}
 }

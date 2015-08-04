@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<!-- define angular app -->
+<html ng-app="joraApp">
+
+<head>
+<!-- SCROLLS -->
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
+<link rel="stylesheet" type="text/css" href="resources/css/main.css">
+
+<!-- SPELLS -->
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="resources/scripts/script.js"></script>
+</head>
+  
+<!-- define angular controller -->
+<body ng-controller="mainController">
+	<nav class="navbar navbar-default">
+		<div class="container">
+			<ul class="nav navbar-nav navbar-left">
+				<li><a href="#"><i class="fa fa-home"></i> Tickets</a></li>
+				<li><a href="#users"><i class="fa fa-shield"></i> Users</a></li>
+				<li><a href="#admin"><i class="fa fa-comment"></i> Admin</a></li>
+			</ul>
+		</div>
+	</nav>
+
+	<div id="main">
+
+		<!-- angular templating -->
+		<!-- this is where content will be injected -->
+		<div ng-view></div>
+
+	</div>
+
+	<footer class="text-center"> </footer>
+
+</body>
+
+</html>

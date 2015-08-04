@@ -23,5 +23,7 @@ public interface TicketDao {
 	boolean addTicket(Ticket ticket);
 
 	void updateTicket(Ticket ticket);
+	
+	Ticket getTicketById(Long ticketId);
 
 }

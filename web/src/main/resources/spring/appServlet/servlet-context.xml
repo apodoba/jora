@@ -6,15 +6,10 @@
 	<!-- Разрешаем использование аннотаций Spring MVC (то есть @Controller и.т.д) -->
 	<annotation-driven />
 	
-	<resources mapping="/images/**" location="/images/"/>
+	<!-- <resources mapping="/images/**" location="/images/"/>
 	<resources mapping="/scripts/**" location="/scripts/"/>
-	<resources mapping="/views/**" location="/views/"/>
-	
-	<!-- <beans:bean
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<beans:property name="prefix" value="/WEB-INF/views/" />
-		<beans:property name="suffix" value=".jsp" />
-	</beans:bean> -->
+	<resources mapping="/views/**" location="/views/"/> -->
+	<resources mapping="/resources/**" location="/resources/"/>
 	
 	<!-- Configure to plugin JSON as request and response in method handler -->
     <beans:bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">

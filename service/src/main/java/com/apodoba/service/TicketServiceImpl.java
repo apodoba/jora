@@ -37,4 +37,9 @@ public class TicketServiceImpl implements TicketService{
 		ticketDao.updateTicket(ticket);
 	}
 
+	@Override
+	public Ticket getTicketById(Long ticketId) {
+		return ticketDao.getTicketById(ticketId);
+	}
+
 }

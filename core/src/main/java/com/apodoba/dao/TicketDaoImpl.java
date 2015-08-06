@@ -1,9 +1,6 @@
 package com.apodoba.dao;
 
-import com.apodoba.domain.Status;
-import com.apodoba.domain.Ticket;
-import com.apodoba.domain.Type;
-import com.apodoba.domain.User;
+import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
@@ -11,7 +8,10 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import com.apodoba.domain.Status;
+import com.apodoba.domain.Ticket;
+import com.apodoba.domain.Type;
+import com.apodoba.domain.User;
 
 /**
  * Created by apodoba on 4/7/14.
@@ -62,6 +62,7 @@ public class TicketDaoImpl implements TicketDao {
 		sessionFactory.getCurrentSession().update(ticket);
 	}
 
+	@SuppressWarnings("unused")
 	@Override
 	public Ticket getTicketById(Long ticketId) {
 		Ticket ticket = (Ticket) sessionFactory.getCurrentSession().get(Ticket.class, ticketId);

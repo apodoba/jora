@@ -54,21 +54,40 @@ joraApp.controller('adminController', function($scope) {
 
 joraApp.controller('ticketController', [ '$scope', '$routeParams', '$http',
 		function($scope, $routeParams, $http) {
+			$scope.ticketId = $routeParams.ticketId;
 			$http({
 				method : 'GET',
-				url : '/web/ticket/' + $routeParams.ticketId
+				url : '/web/ticket/' + $scope.ticketId
 			}).success(function(data, status, headers, config) {
 				$scope.ticket = data;
 			}).error(function(data, status, headers, config) {
 				console.log(data);
 			});
-			$scope.ticketId = $routeParams.ticketId;
+
+			$http({
+				method : 'GET',
+				url : '/web/comments/' + $scope.ticketId
+			}).success(function(data, status, headers, config) {
+				$scope.comments = data;
+			}).error(function(data, status, headers, config) {
+				console.log(data);
+			});
+			
+			$http({
+				method : 'GET',
+				url : '/web/logtime/' + $scope.ticketId
+			}).success(function(data, status, headers, config) {
+				$scope.logtime = data;
+			}).error(function(data, status, headers, config) {
+				console.log(data);
+			});
+
 			$scope.changeCollapseIcon = function(type) {
-				var icon = $("#"+type);
-				if(icon.hasClass("glyphicon-hand-up")){
+				var icon = $("#" + type);
+				if (icon.hasClass("glyphicon-hand-up")) {
 					icon.removeClass("glyphicon-hand-up");
 					icon.addClass("glyphicon-hand-down");
-				}else{
+				} else {
 					icon.removeClass("glyphicon-hand-down");
 					icon.addClass("glyphicon-hand-up");
 				}

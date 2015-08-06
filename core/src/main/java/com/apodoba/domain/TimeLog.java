@@ -1,5 +1,6 @@
 package com.apodoba.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -14,8 +15,13 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "COMMENTS")
-public class TimeLog {
+@Table(name = "TIME_LOG")
+public class TimeLog implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8334913360827203424L;
+
 	@Id
 	@Column(name = "ID")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="timelog_seq_gen")

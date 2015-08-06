@@ -1,5 +1,6 @@
 package com.apodoba.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -15,18 +16,23 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "COMMENTS")
-public class Comments {
+public class Comments implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5276240804213805845L;
+
 	@Id
 	@Column(name = "ID")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="comments_seq_gen")
 	@SequenceGenerator(name="comments_seq_gen", sequenceName="COMMENTS_SEQ")
 	private Long id;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "EMPLOYEE", nullable = false)
 	private User user;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "TICKET", nullable = false)
 	private Ticket ticket;
 

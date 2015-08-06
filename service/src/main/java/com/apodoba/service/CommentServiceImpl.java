@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.apodoba.dao.CommentDao;
 import com.apodoba.domain.Comments;
-import com.apodoba.domain.Ticket;
 
 @Service
 @Transactional
@@ -23,8 +22,8 @@ public class CommentServiceImpl implements CommentService{
 	}
 
 	@Override
-	public List<Comments> getAllCommentByTicket(Ticket ticket) {
-		return commentDao.getAllCommentByTicket(ticket);
+	public List<Comments> getAllCommentByTicket(long ticketId) {
+		return commentDao.getAllCommentByTicket(ticketId);
 	}
 
 	@Override

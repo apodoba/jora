@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.apodoba.domain.Comments;
 import com.apodoba.domain.Ticket;
@@ -25,7 +26,8 @@ public class CommentDaoImpl implements CommentDao{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Comments> getAllCommentByTicket(Ticket ticket) {
+	public List<Comments> getAllCommentByTicket(long ticketId) {
+		Ticket ticket = (Ticket) sessionFactory.getCurrentSession().get(Ticket.class, ticketId);
 		Criteria commentsCriteria = sessionFactory.getCurrentSession().createCriteria(Comments.class);
 		commentsCriteria.add(Restrictions.eq("ticket", ticket));
 		return commentsCriteria.list();
@@ -38,9 +40,10 @@ public class CommentDaoImpl implements CommentDao{
 
 	@SuppressWarnings("unchecked")
 	@Override
+	@Transactional
 	public List<Comments> getAllCommentsByUser(User user) {
 		Criteria commentsCriteria = sessionFactory.getCurrentSession().createCriteria(Comments.class);
-		commentsCriteria.add(Restrictions.eq("user", user));
+		commentsCriteria.add(Restrictions.eq("employee", user));
 		return commentsCriteria.list();
 	}
 	

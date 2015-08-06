@@ -25,11 +25,12 @@ public class TimeLogDaoImpl implements TimeLogDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public int getTimeLogByTicket(Ticket ticket) {
+	public long getTimeLogByTicket(long ticketId) {
+		Ticket ticket = (Ticket) sessionFactory.getCurrentSession().get(Ticket.class, ticketId);
 		Criteria logTimeCriteria = sessionFactory.getCurrentSession().createCriteria(TimeLog.class);
 		logTimeCriteria.add(Restrictions.eq("ticket", ticket));
 		logTimeCriteria.setProjection(Projections.sum("minutes"));
-		List<Integer> totalLogTime = logTimeCriteria.list();
+		List<Long> totalLogTime = logTimeCriteria.list();
 		return totalLogTime.get(0);
 	}
 

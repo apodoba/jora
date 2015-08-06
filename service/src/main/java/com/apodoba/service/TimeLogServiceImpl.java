@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.apodoba.dao.TimeLogDao;
-import com.apodoba.domain.Ticket;
 import com.apodoba.domain.TimeLog;
 
 @Service
@@ -21,8 +20,8 @@ public class TimeLogServiceImpl implements TimeLogService{
 	}
 
 	@Override
-	public int getTimeLogByTicket(Ticket ticket) {
-		return timeLogDao.getTimeLogByTicket(ticket);
+	public long getTimeLogByTicket(long ticketId) {
+		return timeLogDao.getTimeLogByTicket(ticketId);
 	}
 
 	@Override

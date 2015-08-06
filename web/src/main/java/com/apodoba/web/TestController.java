@@ -9,14 +9,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.apodoba.domain.Comments;
 import com.apodoba.domain.Ticket;
+import com.apodoba.service.CommentService;
 import com.apodoba.service.TicketService;
+import com.apodoba.service.TimeLogService;
 
 @Controller
 public class TestController {
 
 	@Autowired
 	private TicketService ticketService;
+	
+	@Autowired
+	private CommentService commentService;
+	
+	@Autowired
+	private TimeLogService timeLogService;
+
 
 	@RequestMapping("/")
 	public String home() {
@@ -33,6 +43,18 @@ public class TestController {
     public @ResponseBody Ticket getTicketById(@PathVariable Long ticketId) {
 		Ticket ticket = ticketService.getTicketById(ticketId);
         return ticket;
+    }
+	
+	@RequestMapping(value = "/comments/{ticketId}", method = RequestMethod.GET)
+    public @ResponseBody List<Comments> getAllCommentsForTicket(@PathVariable Long ticketId) {
+		List<Comments> comments = commentService.getAllCommentByTicket(ticketId);
+        return comments;
+    }
+	
+	@RequestMapping(value = "/logtime/{ticketId}", method = RequestMethod.GET)
+    public @ResponseBody long  getAllLogTimeForTicket(@PathVariable Long ticketId) {
+		long minutes = timeLogService.getTimeLogByTicket(ticketId);
+        return minutes;
     }
 
 }

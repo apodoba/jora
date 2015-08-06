@@ -1,13 +1,12 @@
 package com.apodoba.dao;
 
-import com.apodoba.domain.Ticket;
 import com.apodoba.domain.TimeLog;
 
 public interface TimeLogDao {
 
 	boolean addTimeLog(TimeLog timeLog);
 
-	int getTimeLogByTicket(Ticket ticket);
+	long getTimeLogByTicket(long ticketId);
 
 	void updateTimeLog(TimeLog timeLog);
 

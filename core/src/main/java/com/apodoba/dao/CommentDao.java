@@ -3,7 +3,6 @@ package com.apodoba.dao;
 import java.util.List;
 
 import com.apodoba.domain.Comments;
-import com.apodoba.domain.Ticket;
 import com.apodoba.domain.User;
 
 /**
@@ -13,7 +12,7 @@ public interface CommentDao {
 
 	boolean addComment(Comments comment);
 
-	List<Comments> getAllCommentByTicket(Ticket ticket);
+	List<Comments> getAllCommentByTicket(long ticketId);
 
 	void update(Comments comment);
 

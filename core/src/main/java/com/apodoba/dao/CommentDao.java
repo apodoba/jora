@@ -2,7 +2,7 @@ package com.apodoba.dao;
 
 import java.util.List;
 
-import com.apodoba.domain.Comments;
+import com.apodoba.domain.Comment;
 import com.apodoba.domain.User;
 
 /**
@@ -10,12 +10,14 @@ import com.apodoba.domain.User;
  */
 public interface CommentDao {
 
-	boolean addComment(Comments comment);
+	boolean addComment(Comment comment);
 
-	List<Comments> getAllCommentByTicket(long ticketId);
+	List<Comment> getAllCommentByTicket(long ticketId);
 
-	void update(Comments comment);
+	void update(Comment comment);
 
-	List<Comments> getAllCommentsByUser(User user);
+	List<Comment> getAllCommentsByUser(User user);
+	
+	List<Comment> getAllComments();
 
 }

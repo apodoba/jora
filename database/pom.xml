@@ -121,7 +121,7 @@
                 <configuration>
                     <autocommit>true</autocommit>
                     <driver>${db.driverClassName}</driver>
-                    <url>jdbc:derby://localhost:1527/${db.name};create=true</url>
+                    <url>jdbc:derby://localhost:1527/${db.name};create=false</url>
                     <username>${db.username}</username>
                     <password>${db.password}</password>
                     <skip>${maven.test.skip}</skip>

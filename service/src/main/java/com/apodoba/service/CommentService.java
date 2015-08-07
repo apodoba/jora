@@ -2,13 +2,15 @@ package com.apodoba.service;
 
 import java.util.List;
 
-import com.apodoba.domain.Comments;
+import com.apodoba.domain.Comment;
 
 public interface CommentService {
 	
-	boolean addComment(Comments comment);
+	boolean addComment(Comment comment);
 
-	List<Comments> getAllCommentByTicket(long ticketId);
+	List<Comment> getAllCommentByTicket(long ticketId);
 
-	void update(Comments comment);
+	void update(Comment comment);
+	
+	List<Comment> getAllComments();
 }

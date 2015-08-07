@@ -15,12 +15,13 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "COMMENTS")
-public class Comments implements Serializable{
+@Table(name = "COMMENT")
+public class Comment implements Serializable{
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5276240804213805845L;
+	private static final long serialVersionUID = -7113915779704317344L;
 
 	@Id
 	@Column(name = "ID")
@@ -29,14 +30,14 @@ public class Comments implements Serializable{
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "TICKET", nullable = false)
+	private Ticket ticket;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "EMPLOYEE", nullable = false)
 	private User user;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "TICKET", nullable = false)
-	private Ticket ticket;
-
-	@Column(name = "COMMENT")
+	@Column(name = "TEXT")
 	private String comment;
 
 	@Column(name = "DATE")

@@ -139,19 +139,19 @@
 	</changeSet>
 
 	<changeSet id="25-03-2014_8" author="apodoba">
-		<createTable tableName="COMMENTS">
+		<createTable tableName="COMMENT">
 			<column name="ID" type="int">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
 			<column name="EMPLOYEE" type="integer">
-				<constraints nullable="false" foreignKeyName="FK_EMPLOYEE_ID_COMMENTS"
+				<constraints nullable="false" foreignKeyName="FK_EMPLOYEE_ID_COMMENT"
 					references="EMPLOYEE(ID)" />
 			</column>
 			<column name="TICKET" type="integer">
-				<constraints nullable="false" foreignKeyName="FK_TICKET_ID_COMMENTS"
+				<constraints nullable="false" foreignKeyName="FK_TICKET_ID_COMMENT"
 					references="TICKET(ID)" />
 			</column>
-			<column name="COMMENT" type="varchar(2048)">
+			<column name="TEXT" type="varchar(2048)">
 				<constraints nullable="false" />
 			</column>
 			<column name="DATE" type="date">

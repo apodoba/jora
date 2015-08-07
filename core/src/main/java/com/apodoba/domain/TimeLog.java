@@ -28,11 +28,11 @@ public class TimeLog implements Serializable{
 	@SequenceGenerator(name="timelog_seq_gen", sequenceName="TIME_LOG_SEQ")
 	private Long id;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "EMPLOYEE", nullable = false)
 	private User user;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "TICKET", nullable = false)
 	private Ticket ticket;
 	

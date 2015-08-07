@@ -9,5 +9,5 @@ public interface TimeLogDao {
 	long getTimeLogByTicket(long ticketId);
 
 	void updateTimeLog(TimeLog timeLog);
-
+	
 }

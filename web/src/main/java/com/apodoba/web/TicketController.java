@@ -9,14 +9,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.apodoba.domain.Comments;
+import com.apodoba.dao.TimeLogDao;
+import com.apodoba.domain.Comment;
 import com.apodoba.domain.Ticket;
 import com.apodoba.service.CommentService;
 import com.apodoba.service.TicketService;
 import com.apodoba.service.TimeLogService;
 
 @Controller
-public class TestController {
+public class TicketController {
 
 	@Autowired
 	private TicketService ticketService;
@@ -26,6 +27,9 @@ public class TestController {
 	
 	@Autowired
 	private TimeLogService timeLogService;
+	
+	@Autowired
+	private TimeLogDao timeLogDao;
 
 
 	@RequestMapping("/")
@@ -46,8 +50,8 @@ public class TestController {
     }
 	
 	@RequestMapping(value = "/comments/{ticketId}", method = RequestMethod.GET)
-    public @ResponseBody List<Comments> getAllCommentsForTicket(@PathVariable Long ticketId) {
-		List<Comments> comments = commentService.getAllCommentByTicket(ticketId);
+    public @ResponseBody List<Comment> getAllCommentsForTicket(@PathVariable Long ticketId) {
+		List<Comment> comments = commentService.getAllCommentByTicket(ticketId);
         return comments;
     }
 	

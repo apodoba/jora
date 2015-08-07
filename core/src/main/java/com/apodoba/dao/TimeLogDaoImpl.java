@@ -38,5 +38,4 @@ public class TimeLogDaoImpl implements TimeLogDao {
 	public void updateTimeLog(TimeLog timeLog) {
 		sessionFactory.getCurrentSession().update(timeLog);
 	}
-
 }

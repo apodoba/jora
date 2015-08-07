@@ -9,8 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.apodoba.domain.Comments;
-import com.apodoba.domain.Ticket;
+import com.apodoba.domain.Comment;
 import com.apodoba.domain.User;
 
 @Repository
@@ -20,33 +19,35 @@ public class CommentDaoImpl implements CommentDao{
     private SessionFactory sessionFactory;
 
 	@Override
-	public boolean addComment(Comments comment) {
+	public boolean addComment(Comment comment) {
 		return sessionFactory.getCurrentSession().save(comment) != null ? true: false;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Comments> getAllCommentByTicket(long ticketId) {
-		Ticket ticket = (Ticket) sessionFactory.getCurrentSession().get(Ticket.class, ticketId);
-		Criteria commentsCriteria = sessionFactory.getCurrentSession().createCriteria(Comments.class);
-		commentsCriteria.add(Restrictions.eq("ticket", ticket));
+	public List<Comment> getAllCommentByTicket(long ticketId) {
+		Criteria commentsCriteria = sessionFactory.getCurrentSession().createCriteria(Comment.class);
+		commentsCriteria.add(Restrictions.eq("ticket.id", ticketId));
 		return commentsCriteria.list();
 	}
 
 	@Override
-	public void update(Comments comment) {
+	public void update(Comment comment) {
 		sessionFactory.getCurrentSession().update(comment);		
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
-	public List<Comments> getAllCommentsByUser(User user) {
-		Criteria commentsCriteria = sessionFactory.getCurrentSession().createCriteria(Comments.class);
+	public List<Comment> getAllCommentsByUser(User user) {
+		Criteria commentsCriteria = sessionFactory.getCurrentSession().createCriteria(Comment.class);
 		commentsCriteria.add(Restrictions.eq("employee", user));
 		return commentsCriteria.list();
 	}
-	
-	
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Comment> getAllComments() {
+		 return sessionFactory.getCurrentSession().createCriteria(Comment.class).list();
+	}
 }

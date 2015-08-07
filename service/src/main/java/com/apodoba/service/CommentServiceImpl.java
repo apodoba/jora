@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.apodoba.dao.CommentDao;
-import com.apodoba.domain.Comments;
+import com.apodoba.domain.Comment;
 
 @Service
 @Transactional
@@ -17,18 +17,23 @@ public class CommentServiceImpl implements CommentService{
 	private CommentDao commentDao;
 	
 	@Override
-	public boolean addComment(Comments comment) {
+	public boolean addComment(Comment comment) {
 		return commentDao.addComment(comment);
 	}
 
 	@Override
-	public List<Comments> getAllCommentByTicket(long ticketId) {
+	public List<Comment> getAllCommentByTicket(long ticketId) {
 		return commentDao.getAllCommentByTicket(ticketId);
 	}
 
 	@Override
-	public void update(Comments comment) {
+	public void update(Comment comment) {
 		commentDao.update(comment);
+	}
+
+	@Override
+	public List<Comment> getAllComments() {
+		return commentDao.getAllComments();
 	}
 
 }

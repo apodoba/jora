@@ -31,7 +31,7 @@ public class TimeLogDaoImpl implements TimeLogDao {
 		logTimeCriteria.add(Restrictions.eq("ticket", ticket));
 		logTimeCriteria.setProjection(Projections.sum("minutes"));
 		List<Long> totalLogTime = logTimeCriteria.list();
-		return totalLogTime.get(0);
+		return totalLogTime.get(0) == null ? 0 : totalLogTime.get(0);
 	}
 
 	@Override

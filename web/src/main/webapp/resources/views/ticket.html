@@ -1,5 +1,5 @@
 <div class="container"
-	style="background-color: #f8f8f8; padding-bottom: 20px;">
+	style="border: 1px solid #b7dbf9; padding-bottom: 20px;">
 
 	<h1>{{ ticket.name }}</h1>
 
@@ -15,7 +15,8 @@
 						data-target="#details" data-toggle="collapse"
 						ng-click="changeCollapseIcon('detailsIcon')">
 						<h3 style="text-align: left;">
-							<span id="detailsIcon" class="glyphicon glyphicon-hand-up" aria-hidden="true"></span> Details
+							<span id="detailsIcon" class="glyphicon glyphicon-hand-up"
+								aria-hidden="true"></span> Details
 						</h3>
 					</button>
 
@@ -81,8 +82,94 @@
 
 				</div>
 
+				<!-- Parent Tasks -->
+				<div ng-if="ticket.parent != null" class="container"
+					style="background-color: white;">
+					<hr>
+					<button type="button" class="btn-sm"
+						style="border: 0px; background-color: white; outline: none; width: 100%;"
+						data-target="#parentTask" data-toggle="collapse"
+						ng-click="changeCollapseIcon('parentTaskIcon')">
+						<h4 style="text-align: left;">
+							<span id="parentTaskIcon" class="glyphicon glyphicon-hand-up"
+								aria-hidden="true"></span> Parent Task
+						</h4>
+					</button>
+					<div class="container collapse in" id="parentTask"
+						style="margin: 10px">
+
+						<table class="details" style="margin-right: 50px">
+							<tr>
+								<td>{{ticket.parent.name}}</td>
+								<td>{{ticket.parent.status.status}}</td>
+								<td>{{ticket.description}}</td>
+							</tr>
+						</table>
+					</div>
+
+				</div>
+
+				<!-- Sub Tasks -->
+				<div ng-if="ticket.children" class="container"
+					style="background-color: white;">
+					<hr>
+					<button type="button" class="btn-sm"
+						style="border: 0px; background-color: white; outline: none; width: 100%;"
+						data-target="#subTasks" data-toggle="collapse"
+						ng-click="changeCollapseIcon('subTasksIcon')">
+						<h4 style="text-align: left;">
+							<span id="subTasksIcon" class="glyphicon glyphicon-hand-up"
+								aria-hidden="true"></span> Sub Tasks
+						</h4>
+					</button>
+					<div class="container collapse in" id="subTasks"
+						style="margin: 10px">
+
+						<table>
+							<tr ng-repeat="subTicket in ticket.children">
+								<td><img
+									data-ng-src="resources/images/priority/{{subTicket.priority.priority}}.png"
+									class="img-circle"></td>
+								<td><a href="#t/ticket/{{subTicket.id}}">{{subTicket.name}}</a></td>
+								<td style="padding-left: 10px">{{subTicket.description}}</td>
+							</tr>
+						</table>
+					</div>
+
+				</div>
+
+				<!-- Related Tasks -->
+				<div ng-if="ticket.relatedTickets" class="container"
+					style="background-color: white;">
+					<hr>
+					<button type="button" class="btn-sm"
+						style="border: 0px; background-color: white; outline: none; width: 100%;"
+						data-target="#relatedTickets" data-toggle="collapse"
+						ng-click="changeCollapseIcon('relatedTicketsIcon')">
+						<h4 style="text-align: left;">
+							<span id="relatedTicketsIcon" class="glyphicon glyphicon-hand-up"
+								aria-hidden="true"></span> Sub Tasks
+						</h4>
+					</button>
+					<div class="container collapse in" id="relatedTickets"
+						style="margin: 10px">
+
+						<table>
+							<tr ng-repeat="relatedTicket in ticket.relatedTickets">
+								<td><img
+									data-ng-src="resources/images/priority/{{relatedTicket.priority.priority}}.png"
+									class="img-circle"></td>
+								<td><a href="#t/ticket/{{relatedTicket.id}}">{{subTicket.name}}</a></td>
+								<td>{{subTicket.description}}</td>
+							</tr>
+						</table>
+					</div>
+
+				</div>
+
 				<!-- Comments -->
-				<div class="container" style="background-color: white;">
+				<div ng-if="comments.length > 0" class="container"
+					style="background-color: white;">
 					<hr>
 					<button type="button" class="btn-sm"
 						style="border: 0px; background-color: white; outline: none; width: 100%;"
@@ -94,8 +181,17 @@
 						</h3>
 					</button>
 					<div class="container collapse in" id="comments"
-						style="margin: 10px"></div>
+						style="margin: 10px">
+						<div ng-repeat="comment in comments">
+							<h5>
+								<span><a href="#">{{comment.user.name}}</a> added a
+									comment - {{comment.date | date:"MM/dd/yyyy 'at' h:mma"}}</span>
+							</h5>
+							<textarea style="width: 100%" readonly>{{comment.comment}}</textarea>
+							<hr>
+						</div>
 
+					</div>
 				</div>
 			</div>
 
@@ -160,7 +256,7 @@
 
 					</div>
 				</div>
-				
+
 				<!-- Time tracking -->
 				<div class="container" style="background-color: white;">
 					<hr style="margin-top: 5px; margin-bottom: 5px;">

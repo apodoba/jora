@@ -15,7 +15,7 @@ joraApp.config(function($routeProvider) {
 		controller : 'usersController'
 	})
 
-	.when('/ticket/:ticketId', {
+	.when('/t/ticket/:ticketId', {
 		templateUrl : 'resources/views/ticket.html',
 		controller : 'ticketController'
 	})
@@ -35,7 +35,7 @@ joraApp.controller('mainController', [ '$scope', '$http',
 		function($scope, $http) {
 			$http({
 				method : 'GET',
-				url : '/web/tickets'
+				url : '/web/t/tickets'
 			}).success(function(data, status, headers, config) {
 				$scope.tickets = data;
 			}).error(function(data, status, headers, config) {
@@ -57,7 +57,7 @@ joraApp.controller('ticketController', [ '$scope', '$routeParams', '$http',
 			$scope.ticketId = $routeParams.ticketId;
 			$http({
 				method : 'GET',
-				url : '/web/ticket/' + $scope.ticketId
+				url : '/web/t/ticket/' + $scope.ticketId
 			}).success(function(data, status, headers, config) {
 				$scope.ticket = data;
 			}).error(function(data, status, headers, config) {
@@ -66,7 +66,7 @@ joraApp.controller('ticketController', [ '$scope', '$routeParams', '$http',
 
 			$http({
 				method : 'GET',
-				url : '/web/comments/' + $scope.ticketId
+				url : '/web/t/comments/' + $scope.ticketId
 			}).success(function(data, status, headers, config) {
 				$scope.comments = data;
 			}).error(function(data, status, headers, config) {
@@ -75,7 +75,7 @@ joraApp.controller('ticketController', [ '$scope', '$routeParams', '$http',
 			
 			$http({
 				method : 'GET',
-				url : '/web/logtime/' + $scope.ticketId
+				url : '/web/t/logtime/' + $scope.ticketId
 			}).success(function(data, status, headers, config) {
 				$scope.logtime = data;
 			}).error(function(data, status, headers, config) {

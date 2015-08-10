@@ -1,5 +1,6 @@
 package com.apodoba.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.apodoba.dao.TicketDao;
 import com.apodoba.domain.Ticket;
 import com.apodoba.domain.User;
+import com.apodoba.dto.TicketFullDto;
+import com.apodoba.dto.TicketMainDto;
 
 @Service
 @Transactional
@@ -23,8 +26,12 @@ public class TicketServiceImpl implements TicketService{
 	}
 
 	@Override
-	public List<Ticket> getAllTickets() {
-		return ticketDao.getAllTickets();
+	public List<TicketMainDto> getAllTickets() {
+		List<TicketMainDto> tickets = new ArrayList<TicketMainDto>();
+		for(Ticket ticket: ticketDao.getAllTickets()){
+			tickets.add(TicketMainDto.toDTO(ticket));
+		}
+		return tickets;
 	}
 
 	@Override
@@ -38,8 +45,10 @@ public class TicketServiceImpl implements TicketService{
 	}
 
 	@Override
-	public Ticket getTicketById(Long ticketId) {
-		return ticketDao.getTicketById(ticketId);
+	public TicketFullDto getTicketById(Long ticketId) {
+		Ticket dbTicket = ticketDao.getTicketById(ticketId);
+		TicketFullDto ticketFull = TicketFullDto.toDTO(dbTicket);
+		return ticketFull;
 	}
 
 }

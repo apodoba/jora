@@ -1,7 +1,7 @@
 package com.apodoba.domain;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,8 +16,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "TICKET")
@@ -51,7 +49,6 @@ public class Ticket implements Serializable{
 	@JoinColumn(name = "STATUS", nullable = false)
 	private Status status;
 
-	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "CREATED_EMPLOYEE", nullable = false)
 	private User createdUser;
@@ -60,20 +57,17 @@ public class Ticket implements Serializable{
 	@JoinColumn(name = "ASSIGN_EMPLOYEE", nullable = false)
 	private User assignUser;
 
-	@JsonIgnore
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "HIERARCHY", joinColumns = { @JoinColumn(name = "PARENT") }, inverseJoinColumns = { @JoinColumn(name = "TICKET") })
-	private List<Ticket> children;
+	private Set<Ticket> children;
 	
-	@JsonIgnore
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinTable(name = "HIERARCHY", joinColumns = { @JoinColumn(name = "TICKET") }, inverseJoinColumns = { @JoinColumn(name = "PARENT") })
 	private Ticket parent;
 	
-	@JsonIgnore
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "RELATIONS", joinColumns = { @JoinColumn(name = "TICKET") }, inverseJoinColumns = { @JoinColumn(name = "RELATED") })
-	private List<Ticket> relatedTickets;
+	private Set<Ticket> relatedTickets;
 
 	public Long getId() {
 		return id;
@@ -123,11 +117,11 @@ public class Ticket implements Serializable{
 		this.assignUser = assignUser;
 	}
 
-	public List<Ticket> getChildren() {
+	public Set<Ticket> getChildren() {
 		return children;
 	}
 
-	public void setChildren(List<Ticket> children) {
+	public void setChildren(Set<Ticket> children) {
 		this.children = children;
 	}
 
@@ -139,11 +133,11 @@ public class Ticket implements Serializable{
 		this.parent = parent;
 	}
 
-	public List<Ticket> getRelatedTickets() {
+	public Set<Ticket> getRelatedTickets() {
 		return relatedTickets;
 	}
 
-	public void setRelatedTickets(List<Ticket> relatedTickets) {
+	public void setRelatedTickets(Set<Ticket> relatedTickets) {
 		this.relatedTickets = relatedTickets;
 	}
 

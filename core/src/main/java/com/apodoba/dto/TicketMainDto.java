@@ -1,6 +1,7 @@
 package com.apodoba.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import com.apodoba.domain.Priority;
 import com.apodoba.domain.Status;
@@ -21,6 +22,11 @@ public class TicketMainDto implements Serializable{
 	private Type type;
 	private Status status;
 	private UserDto assignUser;
+	private String environment;
+	private String resolution;
+	private int estimate;
+	private Date created;
+	private Date updated;
 
 	public Long getId() {
 		return id;
@@ -78,17 +84,62 @@ public class TicketMainDto implements Serializable{
 		this.description = description;
 	}
 
+	public String getEnvironment() {
+		return environment;
+	}
+
+	public void setEnvironment(String environment) {
+		this.environment = environment;
+	}
+
+	public String getResolution() {
+		return resolution;
+	}
+
+	public void setResolution(String resolution) {
+		this.resolution = resolution;
+	}
+
+	public int getEstimate() {
+		return estimate;
+	}
+
+	public void setEstimate(int estimate) {
+		this.estimate = estimate;
+	}
+
+	public Date getCreated() {
+		return created;
+	}
+
+	public void setCreated(Date created) {
+		this.created = created;
+	}
+
+	public Date getUpdated() {
+		return updated;
+	}
+
+	public void setUpdated(Date updated) {
+		this.updated = updated;
+	}
+
 	public static TicketMainDto toDTO(Ticket dbTicket){
-		TicketMainDto ticketFull = new TicketMainDto();
-		ticketFull.setAssignUser(dbTicket.getAssignUser() != null ? UserDto.toDTO(dbTicket.getAssignUser()) : new UserDto());
-		ticketFull.setDescription(dbTicket.getDescription());
-		ticketFull.setId(dbTicket.getId());
-		ticketFull.setName(dbTicket.getName());
-		ticketFull.setPriority(dbTicket.getPriority());
-		ticketFull.setStatus(dbTicket.getStatus());
-		ticketFull.setType(dbTicket.getType());
+		TicketMainDto ticket = new TicketMainDto();
+		ticket.setAssignUser(dbTicket.getAssignUser() != null ? UserDto.toDTO(dbTicket.getAssignUser()) : new UserDto());
+		ticket.setDescription(dbTicket.getDescription());
+		ticket.setId(dbTicket.getId());
+		ticket.setName(dbTicket.getName());
+		ticket.setPriority(dbTicket.getPriority());
+		ticket.setStatus(dbTicket.getStatus());
+		ticket.setType(dbTicket.getType());
+		ticket.setCreated(dbTicket.getCreated());
+		ticket.setEnvironment(dbTicket.getEnvironment());
+		ticket.setEstimate(dbTicket.getEstimate());
+		ticket.setUpdated(dbTicket.getUpdated());
+		ticket.setResolution(dbTicket.getResolution());
 		
-		return ticketFull;
+		return ticket;
 	}
 	
 }

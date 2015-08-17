@@ -13,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "TIME_LOG")
@@ -36,7 +38,8 @@ public class TimeLog implements Serializable{
 	@JoinColumn(name = "TICKET", nullable = false)
 	private Ticket ticket;
 	
-	@Column(name="DATE")
+	@Column(name = "DATE", columnDefinition="DATETIME")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
 	
 	@Column(name="MINUTES")

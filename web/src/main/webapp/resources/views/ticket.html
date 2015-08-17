@@ -34,7 +34,7 @@
 											</tr>
 											<tr>
 												<td>Environment:</td>
-												<td>Windows XP SP 3</td>
+												<td>{{ticket.environment}}</td>
 											</tr>
 											<tr>
 												<td>Priority:</td>
@@ -53,7 +53,7 @@
 											<tr>
 											<tr>
 												<td>Resolution:</td>
-												<td>Unresolved</td>
+												<td>{{ticket.resolution}}</td>
 											</tr>
 										</table>
 									</td>
@@ -100,7 +100,7 @@
 
 						<table class="details" style="margin-right: 50px">
 							<tr>
-								<td>{{ticket.parent.name}}</td>
+								<td><a href="#t/ticket/{{ticket.parent.id}}">{{ticket.parent.name}}</a></td>
 								<td>{{ticket.parent.status.status}}</td>
 								<td>{{ticket.description}}</td>
 							</tr>
@@ -148,7 +148,7 @@
 						ng-click="changeCollapseIcon('relatedTicketsIcon')">
 						<h4 style="text-align: left;">
 							<span id="relatedTicketsIcon" class="glyphicon glyphicon-hand-up"
-								aria-hidden="true"></span> Sub Tasks
+								aria-hidden="true"></span> Related Tasks
 						</h4>
 					</button>
 					<div class="container collapse in" id="relatedTickets"
@@ -159,8 +159,8 @@
 								<td><img
 									data-ng-src="resources/images/priority/{{relatedTicket.priority.priority}}.png"
 									class="img-circle"></td>
-								<td><a href="#t/ticket/{{relatedTicket.id}}">{{subTicket.name}}</a></td>
-								<td>{{subTicket.description}}</td>
+								<td><a href="#t/ticket/{{relatedTicket.id}}">{{relatedTicket.name}}</a></td>
+								<td style="padding-left: 10px">{{relatedTicket.description}}</td>
 							</tr>
 						</table>
 					</div>
@@ -245,11 +245,11 @@
 							<table class="small-details">
 								<tr>
 									<td>Created:</td>
-									<td>2014-08-03 14:15:10</td>
+									<td>{{ticket.created | date:"MM/dd/yyyy 'at' h:mma"}}</td>
 								</tr>
 								<tr>
 									<td>Updated:</td>
-									<td>2014-08-04 00:15:10</td>
+									<td>{{ticket.updated | date:"MM/dd/yyyy 'at' h:mma"}}</td>
 								</tr>
 							</table>
 						</div>
@@ -270,16 +270,22 @@
 						</h5>
 					</button>
 
-					<div class="container collapse in" id="dates">
+					<div class="container collapse in" id="time">
 						<div>
 							<table class="small-details">
 								<tr>
 									<td>Estimated:</td>
-									<td>2d 5h</td>
+									<td>
+										<span ng-if="estimateHours > 0" >{{ estimateHours }} h </span> 
+										<span ng-if="estimateMinutes > 0" >{{ estimateMinutes }} min </span>
+									</td>
 								</tr>
 								<tr>
 									<td>Logged:</td>
-									<td>{{ parseInt(logtime/60) }}</td>
+									<td>
+										<span ng-if="logHours > 0" >{{ logHours }} h </span> 
+										<span ng-if="logMinutes > 0" >{{ logMinutes }} min </span>
+									</td>
 								</tr>
 							</table>
 						</div>

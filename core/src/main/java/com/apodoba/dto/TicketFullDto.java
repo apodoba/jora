@@ -1,6 +1,7 @@
 package com.apodoba.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -27,6 +28,11 @@ public class TicketFullDto implements Serializable{
 	private Set<TicketMainDto> children;
 	private TicketMainDto parent;
 	private Set<TicketMainDto> relatedTickets;
+	private String environment;
+	private String resolution;
+	private int estimate;
+	private Date created;
+	private Date updated;
 
 	public Long getId() {
 		return id;
@@ -116,31 +122,76 @@ public class TicketFullDto implements Serializable{
 		this.description = description;
 	}
 	
+	public String getEnvironment() {
+		return environment;
+	}
+
+	public void setEnvironment(String environment) {
+		this.environment = environment;
+	}
+
+	public String getResolution() {
+		return resolution;
+	}
+
+	public void setResolution(String resolution) {
+		this.resolution = resolution;
+	}
+
+	public int getEstimate() {
+		return estimate;
+	}
+
+	public void setEstimate(int estimate) {
+		this.estimate = estimate;
+	}
+
+	public Date getCreated() {
+		return created;
+	}
+
+	public void setCreated(Date created) {
+		this.created = created;
+	}
+
+	public Date getUpdated() {
+		return updated;
+	}
+
+	public void setUpdated(Date updated) {
+		this.updated = updated;
+	}
+
 	public static TicketFullDto toDTO(Ticket dbTicket){
-		TicketFullDto ticketFull = new TicketFullDto();
-		ticketFull.setAssignUser(dbTicket.getAssignUser() != null ? UserDto.toDTO(dbTicket.getAssignUser()) : new UserDto());
-		ticketFull.setCreatedUser(UserDto.toDTO(dbTicket.getCreatedUser()));
-		ticketFull.setDescription(dbTicket.getDescription());
-		ticketFull.setId(dbTicket.getId());
-		ticketFull.setName(dbTicket.getName());
-		ticketFull.setParent(dbTicket.getParent() != null ? TicketMainDto.toDTO(dbTicket.getParent()) : null);
-		ticketFull.setPriority(dbTicket.getPriority());
-		ticketFull.setStatus(dbTicket.getStatus());
-		ticketFull.setType(dbTicket.getType());
+		TicketFullDto ticket = new TicketFullDto();
+		ticket.setAssignUser(dbTicket.getAssignUser() != null ? UserDto.toDTO(dbTicket.getAssignUser()) : new UserDto());
+		ticket.setCreatedUser(UserDto.toDTO(dbTicket.getCreatedUser()));
+		ticket.setDescription(dbTicket.getDescription());
+		ticket.setId(dbTicket.getId());
+		ticket.setName(dbTicket.getName());
+		ticket.setParent(dbTicket.getParent() != null ? TicketMainDto.toDTO(dbTicket.getParent()) : null);
+		ticket.setPriority(dbTicket.getPriority());
+		ticket.setStatus(dbTicket.getStatus());
+		ticket.setType(dbTicket.getType());
+		ticket.setCreated(dbTicket.getCreated());
+		ticket.setEnvironment(dbTicket.getEnvironment());
+		ticket.setEstimate(dbTicket.getEstimate());
+		ticket.setUpdated(dbTicket.getUpdated());
+		ticket.setResolution(dbTicket.getResolution());
 		
 		Set<TicketMainDto> related = new HashSet<TicketMainDto>();
-		for(Ticket ticket: dbTicket.getRelatedTickets()){
-			related.add(TicketMainDto.toDTO(ticket));
+		for(Ticket ticketChild: dbTicket.getRelatedTickets()){
+			related.add(TicketMainDto.toDTO(ticketChild));
 		}
-		ticketFull.setRelatedTickets(related);
+		ticket.setRelatedTickets(related);
 		
 		related = new HashSet<TicketMainDto>();
-		for(Ticket ticket: dbTicket.getChildren()){
-			related.add(TicketMainDto.toDTO(ticket));
+		for(Ticket ticketChild: dbTicket.getChildren()){
+			related.add(TicketMainDto.toDTO(ticketChild));
 		}
-		ticketFull.setChildren(related);
+		ticket.setChildren(related);
 		
-		return ticketFull;
+		return ticket;
 	}
 
 }

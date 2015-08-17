@@ -26,6 +26,7 @@ public class CommentDaoImpl implements CommentDao{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Comment> getAllCommentByTicket(long ticketId) {
+//		Ticket ticket = (Ticket) sessionFactory.getCurrentSession().get(Ticket.class, ticketId);
 		Criteria commentsCriteria = sessionFactory.getCurrentSession().createCriteria(Comment.class);
 		commentsCriteria.add(Restrictions.eq("ticket.id", ticketId));
 		return commentsCriteria.list();

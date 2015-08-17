@@ -81,6 +81,21 @@
 			<column name="DESCRIPTION" type="varchar(2048)">
 				<constraints nullable="false" />
 			</column>
+			<column name="ESTIMATE" type="integer">
+				<constraints nullable="false" />
+			</column>
+			<column name="RESOLUTION" type="varchar(1024)">
+				<constraints nullable="false" />
+			</column>
+			<column name="ENVIRONMENT" type="varchar(2048)">
+				<constraints nullable="false" />
+			</column>
+			<column name="CREATED" type="timestamp">
+				<constraints nullable="false" />
+			</column>
+			<column name="UPDATED" type="timestamp">
+				<constraints nullable="false" />
+			</column>
 		</createTable>
 	</changeSet>
 
@@ -97,7 +112,7 @@
 				<constraints nullable="false" foreignKeyName="FK_TICKET_ID_LOG"
 					references="TICKET(ID)" />
 			</column>
-			<column name="DATE" type="date">
+			<column name="DATE" type="timestamp">
 				<constraints nullable="false" />
 			</column>
 			<column name="MINUTES" type="integer">
@@ -154,7 +169,7 @@
 			<column name="TEXT" type="varchar(2048)">
 				<constraints nullable="false" />
 			</column>
-			<column name="DATE" type="date">
+			<column name="DATE" type="timestamp">
 				<constraints nullable="false" />
 			</column>
 		</createTable>

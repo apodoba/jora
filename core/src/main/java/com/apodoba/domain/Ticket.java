@@ -1,6 +1,7 @@
 package com.apodoba.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -16,6 +17,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "TICKET")
@@ -68,6 +71,23 @@ public class Ticket implements Serializable{
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "RELATIONS", joinColumns = { @JoinColumn(name = "TICKET") }, inverseJoinColumns = { @JoinColumn(name = "RELATED") })
 	private Set<Ticket> relatedTickets;
+	
+	@Column(name = "ENVIRONMENT", nullable= false)
+	private String environment;
+
+	@Column(name = "RESOLUTION", nullable= false)
+	private String resolution;
+	
+	@Column(name="ESTIMATE")
+	private int estimate;
+	
+	@Column(name = "CREATED", columnDefinition="DATETIME")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date created;
+	
+	@Column(name = "UPDATED", columnDefinition="DATETIME")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date updated;
 
 	public Long getId() {
 		return id;
@@ -155,6 +175,46 @@ public class Ticket implements Serializable{
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getEnvironment() {
+		return environment;
+	}
+
+	public void setEnvironment(String environment) {
+		this.environment = environment;
+	}
+
+	public String getResolution() {
+		return resolution;
+	}
+
+	public void setResolution(String resolution) {
+		this.resolution = resolution;
+	}
+
+	public int getEstimate() {
+		return estimate;
+	}
+
+	public void setEstimate(int estimate) {
+		this.estimate = estimate;
+	}
+
+	public Date getCreated() {
+		return created;
+	}
+
+	public void setCreated(Date created) {
+		this.created = created;
+	}
+
+	public Date getUpdated() {
+		return updated;
+	}
+
+	public void setUpdated(Date updated) {
+		this.updated = updated;
 	}
 
 }

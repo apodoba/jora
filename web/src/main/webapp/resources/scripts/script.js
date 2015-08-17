@@ -25,9 +25,9 @@ joraApp.config(function($routeProvider) {
 		controller : 'adminController'
 	})
 
-	/*
-	 * .otherwise({ redirectTo : '/' })
-	 */;
+	.otherwise({
+		redirectTo : '/'
+	});
 	;
 });
 
@@ -60,6 +60,8 @@ joraApp.controller('ticketController', [ '$scope', '$routeParams', '$http',
 				url : '/web/t/ticket/' + $scope.ticketId
 			}).success(function(data, status, headers, config) {
 				$scope.ticket = data;
+				$scope.estimateHours = data.estimate/60 - ((data.estimate/60) % 1);
+				$scope.estimateMinutes = data.estimate - $scope.estimateHours * 60;
 			}).error(function(data, status, headers, config) {
 				console.log(data);
 			});
@@ -72,12 +74,13 @@ joraApp.controller('ticketController', [ '$scope', '$routeParams', '$http',
 			}).error(function(data, status, headers, config) {
 				console.log(data);
 			});
-			
+
 			$http({
 				method : 'GET',
 				url : '/web/t/logtime/' + $scope.ticketId
 			}).success(function(data, status, headers, config) {
-				$scope.logtime = data;
+				$scope.logHours = data/60 - ((data/60) % 1);
+				$scope.logMinutes = data - $scope.logHours * 60;
 			}).error(function(data, status, headers, config) {
 				console.log(data);
 			});

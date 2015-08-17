@@ -3,15 +3,10 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans"
 	xsi:schemaLocation=" http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-	<!-- Разрешаем использование аннотаций Spring MVC (то есть @Controller и.т.д) -->
 	<annotation-driven />
 	
-	<!-- <resources mapping="/images/**" location="/images/"/>
-	<resources mapping="/scripts/**" location="/scripts/"/>
-	<resources mapping="/views/**" location="/views/"/> -->
 	<resources mapping="/resources/**" location="/resources/"/>
 	
-	<!-- Configure to plugin JSON as request and response in method handler -->
     <beans:bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
         <beans:property name="messageConverters">
             <beans:list>
@@ -20,7 +15,6 @@
         </beans:property>
     </beans:bean>
      
-    <!-- Configure bean to convert JSON to POJO and vice versa -->
     <beans:bean id="jsonMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
     </beans:bean> 
 	

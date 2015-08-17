@@ -3,11 +3,11 @@ package com.apodoba.web;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.apodoba.dao.TimeLogDao;
 import com.apodoba.dto.CommentDto;
@@ -18,7 +18,7 @@ import com.apodoba.service.TicketService;
 import com.apodoba.service.TimeLogService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-@Controller
+@RestController
 @RequestMapping(value = "/t")
 public class TicketController {
 

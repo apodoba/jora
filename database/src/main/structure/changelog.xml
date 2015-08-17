@@ -47,6 +47,9 @@
 			<column name="POSITION" type="varchar(50)">
 				<constraints nullable="false" />
 			</column>
+			<column name="version" type="int">
+				<constraints nullable="false" />
+			</column>
 		</createTable>
 	</changeSet>
 
@@ -96,6 +99,9 @@
 			<column name="UPDATED" type="timestamp">
 				<constraints nullable="false" />
 			</column>
+			<column name="version" type="int">
+				<constraints nullable="false" />
+			</column>
 		</createTable>
 	</changeSet>
 
@@ -116,6 +122,9 @@
 				<constraints nullable="false" />
 			</column>
 			<column name="MINUTES" type="integer">
+				<constraints nullable="false" />
+			</column>
+			<column name="version" type="int">
 				<constraints nullable="false" />
 			</column>
 		</createTable>
@@ -170,6 +179,9 @@
 				<constraints nullable="false" />
 			</column>
 			<column name="DATE" type="timestamp">
+				<constraints nullable="false" />
+			</column>
+			<column name="version" type="int">
 				<constraints nullable="false" />
 			</column>
 		</createTable>

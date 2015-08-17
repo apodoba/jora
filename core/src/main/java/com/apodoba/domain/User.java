@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 @Entity
 @Table(name = "EMPLOYEE")
@@ -29,6 +30,10 @@ public class User implements Serializable{
 
 	@Column(name = "POSITION")
 	private String position;
+	
+	@Version
+	@Column(name = "version")
+	private int version;
 	
 	public Long getId() {
 		return id;
@@ -54,4 +59,11 @@ public class User implements Serializable{
 		this.position = position;
 	}
 
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
 }

@@ -1,5 +1,5 @@
-INSERT INTO EMPLOYEE VALUES (1, 'Petrov1 Igor1', 'Developer123');
-INSERT INTO EMPLOYEE VALUES (2, 'Ivanov Ivan', 'Developer');
-INSERT INTO EMPLOYEE VALUES (3, 'Sverdlov Petro', 'QA');
-INSERT INTO EMPLOYEE VALUES (4, 'Pipkina Inna', 'QA');
-INSERT INTO EMPLOYEE VALUES (5, 'Boss Boss', 'PM');
+INSERT INTO EMPLOYEE VALUES (1, 'Petrov1 Igor1', 'Developer123', 1);
+INSERT INTO EMPLOYEE VALUES (2, 'Ivanov Ivan', 'Developer', 1);
+INSERT INTO EMPLOYEE VALUES (3, 'Sverdlov Petro', 'QA', 1);
+INSERT INTO EMPLOYEE VALUES (4, 'Pipkina Inna', 'QA', 1);
+INSERT INTO EMPLOYEE VALUES (5, 'Boss Boss', 'PM', 1);

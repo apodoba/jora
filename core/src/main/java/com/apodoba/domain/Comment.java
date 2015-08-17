@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 @Entity
 @Table(name = "COMMENT")
@@ -42,6 +43,10 @@ public class Comment implements Serializable{
 
 	@Column(name = "DATE")
 	private Date date;
+	
+	@Version
+	@Column(name = "version")
+	private int version;
 
 	public Long getId() {
 		return id;
@@ -81,6 +86,14 @@ public class Comment implements Serializable{
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
 	}
 
 }

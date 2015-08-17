@@ -15,6 +15,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 
 @Entity
 @Table(name = "TIME_LOG")
@@ -44,6 +45,10 @@ public class TimeLog implements Serializable{
 	
 	@Column(name="MINUTES")
 	private int minutes;
+	
+	@Version
+	@Column(name = "version")
+	private int version;
 
 	public Long getId() {
 		return id;
@@ -83,5 +88,13 @@ public class TimeLog implements Serializable{
 
 	public void setMinutes(int minutes) {
 		this.minutes = minutes;
+	}
+
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
 	}
 }

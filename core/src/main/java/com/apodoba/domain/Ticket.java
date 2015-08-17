@@ -19,6 +19,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 
 @Entity
 @Table(name = "TICKET")
@@ -88,6 +89,10 @@ public class Ticket implements Serializable{
 	@Column(name = "UPDATED", columnDefinition="DATETIME")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updated;
+	
+	@Version
+	@Column(name = "version")
+	private int version;
 
 	public Long getId() {
 		return id;
@@ -217,4 +222,11 @@ public class Ticket implements Serializable{
 		this.updated = updated;
 	}
 
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
 }

@@ -1,11 +1,21 @@
 // create the module and name it joraApp
-var joraApp = angular.module('joraApp', [ 'ngRoute' ]);
+var joraApp = angular.module('joraApp', ['ngRoute', 'ngCookies']);
 
 // configure our routes
-joraApp.config(function($routeProvider) {
-	$routeProvider
-
-	.when('/', {
+joraApp.config(function($routeProvider, $httpProvider) {
+	$httpProvider.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
+	$httpProvider.defaults.withCredentials = true;
+	$httpProvider.defaults.transformRequest.unshift(function (data, headersGetter) {
+	    var key, result = [];
+	    if (typeof data === "string")
+	      return data;
+	    for (key in data) {
+	      if (data.hasOwnProperty(key))
+	        result.push(encodeURIComponent(key) + "=" + encodeURIComponent(data[key]));
+	    }
+	    return result.join("&");
+	});
+	$routeProvider.when('/', {
 		templateUrl : 'resources/views/tickets.html',
 		controller : 'mainController'
 	})
@@ -24,7 +34,6 @@ joraApp.config(function($routeProvider) {
 		templateUrl : 'resources/views/admin.html',
 		controller : 'adminController'
 	})
-	
 	.when('/login', {
 		templateUrl : 'resources/views/login.html',
 		controller : 'loginController'
@@ -36,20 +45,42 @@ joraApp.config(function($routeProvider) {
 	;
 });
 
-/*joraApp.controller('mainController', [ '$scope', '$http', sessionService,
-		function($scope, $http) {
+joraApp.value('redirectToUrlAfterLogin', { url: '/' });
+
+joraApp.factory('loginService', function($location, redirectToUrlAfterLogin) {
+    return {
+        redirectToLogin: function(status) {
+        	if(status === 401) {
+        		if($location.path().toLowerCase() != '/login') {
+        			redirectToUrlAfterLogin.url = $location.path();
+        		}else {
+        				redirectToUrlAfterLogin.url = '/';
+        		}
+        		$location.path("/login");
+        	}
+        },
+        redirectAfterLogin: function() {
+			$location.path(redirectToUrlAfterLogin.url);
+        }
+    };
+});
+
+
+joraApp.controller('mainController', [ '$scope', '$http', 'loginService',
+		function($scope, $http, loginService) {
+			$scope.message = $scope.count + 1;
+			$scope.message = 'Everyone come and see how good I look!';
 			$http({
 				method : 'GET',
-				url : '/web/t/tickets'
+				url : '/web/t/tickets',
+				withCredentials: true
 			}).success(function(data, status, headers, config) {
 				$scope.tickets = data;
 			}).error(function(data, status, headers, config) {
-				console.log(data);
+				loginService.redirectToLogin(status);
 			});
-			$scope.isLoggedIn = sessionService.isLoggedIn;
-			$scope.logout = sessionService.logout;
-			$scope.message = 'Everyone come and see how good I look!';
-		} ]);*/
+}]);
+			
 
 joraApp.controller('usersController', function($scope) {
 	$scope.message = 'Look! I am an user page.';
@@ -59,8 +90,30 @@ joraApp.controller('adminController', function($scope) {
 	$scope.message = 'Look! I am an admin page.';
 });
 
-joraApp.controller('ticketController', [ '$scope', '$routeParams', '$http',
-		function($scope, $routeParams, $http) {
+joraApp.controller('loginController', function($scope, $http, loginService, $cookies) {
+	$scope.message = 'Look! I am an login page.';
+	$scope.login = function(){
+		$http({
+        method: "POST",
+        url: "/web/login",
+        data: {
+       	 password: $scope.credentials.password,
+       	 username: $scope.credentials.username,
+        }})
+        .success(function(data, status, headers, config) {
+        	loginService.redirectAfterLogin();
+        	debugger
+        	console.log($cookies.session);
+    	})
+    	.error(function(data, status, headers, config) {
+    		console.log("error login", status);
+    	});
+	}
+});
+
+
+joraApp.controller('ticketController', [ '$scope', '$routeParams', '$http',  '$location',
+		function($scope, $routeParams, $http, $location, $cookies) {
 			$scope.ticketId = $routeParams.ticketId;
 			$http({
 				method : 'GET',
@@ -70,7 +123,7 @@ joraApp.controller('ticketController', [ '$scope', '$routeParams', '$http',
 				$scope.estimateHours = data.estimate/60 - ((data.estimate/60) % 1);
 				$scope.estimateMinutes = data.estimate - $scope.estimateHours * 60;
 			}).error(function(data, status, headers, config) {
-				console.log(data);
+				loginService.redirectToLogin(status);
 			});
 
 			$http({
@@ -79,7 +132,7 @@ joraApp.controller('ticketController', [ '$scope', '$routeParams', '$http',
 			}).success(function(data, status, headers, config) {
 				$scope.comments = data;
 			}).error(function(data, status, headers, config) {
-				console.log(data);
+				loginService.redirectToLogin(status);
 			});
 
 			$http({
@@ -89,7 +142,7 @@ joraApp.controller('ticketController', [ '$scope', '$routeParams', '$http',
 				$scope.logHours = data/60 - ((data/60) % 1);
 				$scope.logMinutes = data - $scope.logHours * 60;
 			}).error(function(data, status, headers, config) {
-				console.log(data);
+				loginService.redirectToLogin(status);
 			});
 
 			$scope.changeCollapseIcon = function(type) {
@@ -103,84 +156,3 @@ joraApp.controller('ticketController', [ '$scope', '$routeParams', '$http',
 				}
 			};
 		} ]);
-
-
-joraApp.factory('sessionService', function($http, $base64) {
-    var session = {};
-    session.login = function(data) {
-        alert('user logged in with credentials ' + data.name + " and " + data.password);
-        localStorage.setItem("session", data);
-    };
-    session.logout = function() {
-        localStorage.removeItem("session");
-    };
-    session.isLoggedIn = function() {
-        return localStorage.getItem("session") !== null;
-    };
-    return session;
-});
-joraApp.factory('blogService', function($resource) {
-    var service = {};
-    return service;
-});
-joraApp.factory('accountService', function($resource) {
-    var service = {};
-    service.register = function(account, success, failure) {
-        var Account = $resource("/basic-web-app/rest/accounts");
-        Account.save({}, account, success, failure);
-    };
-    service.getAccountById = function(accountId) {
-        var Account = $resource("/basic-web-app/rest/accounts/:paramAccountId");
-        return Account.get({paramAccountId:accountId}).$promise;
-    };
-    service.userExists = function(account, success, failure) {
-        var Account = $resource("/basic-web-app/rest/accounts");
-        var data = Account.get({name:account.name, password:account.password}, function() {
-            var accounts = data.accounts;
-            if(accounts.length !== 0) {
-                success(account);
-            } else {
-                failure();
-            }
-        },
-        failure);
-    };
-    service.getAllAccounts = function() {
-          var Account = $resource("/basic-web-app/rest/accounts");
-          return Account.get().$promise.then(function(data) {
-            return data.accounts;
-          });
-      };
-    return service;
-});
-
-/*joraApp.controller("loginController", function($scope, sessionService, accountService, $state) {
-	debugger
-    $scope.login = function() {
-        accountService.userExists($scope.account, function(account) {
-            sessionService.login($scope.account);
-            $state.go("home");
-        },
-        function() {
-            alert("Error logging in user");
-        });
-    };
-});
-*/
-joraApp.controller('loginController', function($scope, sessionService) {
-	$scope.message = 'Look! I am an admin page.';
-});
-
-joraApp.controller('mainController', function($scope, $http, sessionService) {
-		$http({
-        	method : 'GET',
-        	url : '/web/t/tickets'
-        }).success(function(data, status, headers, config) {
-        	$scope.tickets = data;
-        }).error(function(data, status, headers, config) {
-        	console.log(data);
-        });
-		$scope.isLoggedIn = sessionService.isLoggedIn;
-		$scope.logout = sessionService.logout;
-		$scope.message = 'Everyone come and see how good I look!';
-});

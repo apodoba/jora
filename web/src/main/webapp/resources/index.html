@@ -5,63 +5,42 @@
 
 <head>
 <!-- SCROLLS -->
-<link rel="stylesheet"
-	href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
-<link rel="stylesheet"
-	href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
 <link rel="stylesheet" type="text/css" href="resources/css/main.css">
 
 <!-- SPELLS -->
-<script
-	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
-<script
-	src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script
-	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="https://code.angularjs.org/1.4.0/angular.min.js"></script>
+<script src="https://code.angularjs.org/1.4.0/angular-route.js"></script>
+<script src="https://code.angularjs.org/1.4.0/angular-cookies.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script src="resources/scripts/script.js"></script>
 </head>
-
+  
 <!-- define angular controller -->
 <body ng-controller="mainController">
-
-	<div class="btn-group" ng-hide="isLoggedIn()">
-		<a ui-sref="login" class="btn btn-large btn-default"> <i class="fa fa-book"></i> Login
-		</a> <a ui-sref="register" class="btn btn-large btn-success"> <i class="fa fa-download"></i> Register
-		</a>
-	</div>
-
-	<div class="btn-group" ng-show="isLoggedIn()">
-		<a ng-click="logout()" class="btn btn-large btn-default"> <i class="fa fa-book"></i> Logout
-		</a>
-	</div>
-
-	<div ng-show="isLoggedIn()> 
-		<nav class="navbar navbar-default" style="background-color: #1183da">
-			<div class="container">
-				<ul class="nav navbar-nav navbar-left">
-					<li><h3 style="color: white;">JORA</h3></li>
-					<li style="margin-top: 5px; margin-left: 50px;"><a href="#"
-						style="color: #a4d3f8;"><i class="fa fa-home"></i> Tickets</a></li>
-					<li style="margin-top: 5px;"><a href="#users"
-						style="color: #a4d3f8;"><i class="fa fa-shield"></i> Users</a></li>
-					<li style="margin-top: 5px;"><a href="#admin"
-						style="color: #a4d3f8;"><i class="fa fa-comment"></i> Admin</a></li>
-				</ul>
-			</div>
-		</nav>
-
-		<div id="main">
-
-			<!-- angular templating -->
-			<!-- this is where content will be injected -->
-			<div ng-view></div>
-
+	<nav class="navbar navbar-default" style="background-color: #1183da">
+		<div class="container">
+			<ul class="nav navbar-nav navbar-left">
+				<li><h3 style="color: white;">JORA</h3></li>
+				<li style="margin-top: 5px;margin-left: 50px;"><a href="#" style="color: #a4d3f8;"><i class="fa fa-home"></i> Tickets</a></li>
+				<li style="margin-top: 5px;"><a href="#users" style="color: #a4d3f8;"><i class="fa fa-shield"></i> Users</a></li>
+				<li style="margin-top: 5px;"><a href="#admin" style="color: #a4d3f8;"><i class="fa fa-comment"></i> Admin</a></li>
+			</ul>
 		</div>
+	</nav>
 
-		<footer class="text-center"> </footer>
+	<div id="main">
+
+		<!-- angular templating -->
+		<!-- this is where content will be injected -->
+		<div ng-view></div>
+
 	</div>
+
+	<footer class="text-center"> </footer>
+
 </body>
 
 </html>

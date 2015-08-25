@@ -47,7 +47,7 @@ public class TimeLog implements Serializable{
 	private int minutes;
 	
 	@Version
-	@Column(name = "version")
+	@Column(name = "VERSION")
 	private int version;
 
 	public Long getId() {

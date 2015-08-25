@@ -4,20 +4,30 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd 
 		http://www.springframework.org/schema/security
 		http://www.springframework.org/schema/security/spring-security-4.0.xsd">
+
 	<http auto-config="true" use-expressions="true" entry-point-ref="restAuthenticationEntryPoint">
-		<intercept-url pattern="/t/**" access="hasRole('ROLE_USER')" />
-		<csrf disabled="true"/>
-		<logout/>
-		<form-login/>
+		<intercept-url pattern="/t/**" access="hasRole('USER')" />
+		<csrf disabled="true" />
+		<logout delete-cookies="AUTORIZE" />
+		<form-login authentication-success-handler-ref="redirectRoleStrategy"/>
 	</http>
 	<authentication-manager alias="authenticationManager">
-		<authentication-provider>
+		<!-- <authentication-provider>
 			<user-service>
 				<user authorities="ROLE_USER" name="guest" password="guest" />
 			</user-service>
+		</authentication-provider> -->
+		
+		<authentication-provider>
+			<!-- <password-encoder hash="sha"/> -->
+			<jdbc-user-service data-source-ref="dataSource" users-by-username-query="select email, password, enable from EMPLOYEE where email=?"
+				authorities-by-username-query="select empl.email, er.role from employee empl, role er where empl.role = er.id and empl.email =?  " />
 		</authentication-provider>
+		
 	</authentication-manager>
-	
+
+	<beans:bean id="redirectRoleStrategy" class="com.apodoba.security.RoleBasedAuthenticationSuccessHandler" />
+
 	<beans:bean id="restAuthenticationEntryPoint" class="com.apodoba.security.RestAuthenticationEntryPoint" />
-	
+
 </beans:beans>

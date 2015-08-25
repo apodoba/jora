@@ -91,7 +91,7 @@ public class Ticket implements Serializable{
 	private Date updated;
 	
 	@Version
-	@Column(name = "version")
+	@Column(name = "VERSION")
 	private int version;
 
 	public Long getId() {

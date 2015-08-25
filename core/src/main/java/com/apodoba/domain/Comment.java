@@ -45,7 +45,7 @@ public class Comment implements Serializable{
 	private Date date;
 	
 	@Version
-	@Column(name = "version")
+	@Column(name = "VERSION")
 	private int version;
 
 	public Long getId() {

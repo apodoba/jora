@@ -35,19 +35,47 @@
 			</column>
 		</createTable>
 	</changeSet>
+	
+	<changeSet id="25-08-2015_1" author="apodoba">
+		<createTable tableName="ROLE">
+			<column name="ID" type="int">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="ROLE" type="varchar(20)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+	
 
 	<changeSet id="25-03-2014_3" author="apodoba">
 		<createTable tableName="EMPLOYEE">
 			<column name="ID" type="int">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
-			<column name="NAME" type="varchar(50)">
+			<column name="EMAIL" type="varchar(50)">
+				<constraints nullable="false" />
+			</column>
+			<column name="FIRST_NAME" type="varchar(50)">
+				<constraints nullable="false" />
+			</column>
+			<column name="LAST_NAME" type="varchar(50)">
+				<constraints nullable="false" />
+			</column>
+			<column name="PASSWORD" type="varchar(50)">
 				<constraints nullable="false" />
 			</column>
 			<column name="POSITION" type="varchar(50)">
 				<constraints nullable="false" />
 			</column>
-			<column name="version" type="int">
+			<column name="ROLE" type="integer">
+				<constraints nullable="false" foreignKeyName="FK_ROLE_ID"
+					references="ROLE(ID)" />
+			</column>
+			<column name="VERSION" type="int">
+				<constraints nullable="false" />
+			</column>
+			<column name="ENABLE" type="boolean">
 				<constraints nullable="false" />
 			</column>
 		</createTable>
@@ -99,7 +127,7 @@
 			<column name="UPDATED" type="timestamp">
 				<constraints nullable="false" />
 			</column>
-			<column name="version" type="int">
+			<column name="VERSION" type="int">
 				<constraints nullable="false" />
 			</column>
 		</createTable>
@@ -124,7 +152,7 @@
 			<column name="MINUTES" type="integer">
 				<constraints nullable="false" />
 			</column>
-			<column name="version" type="int">
+			<column name="VERSION" type="int">
 				<constraints nullable="false" />
 			</column>
 		</createTable>
@@ -181,7 +209,7 @@
 			<column name="DATE" type="timestamp">
 				<constraints nullable="false" />
 			</column>
-			<column name="version" type="int">
+			<column name="VERSION" type="int">
 				<constraints nullable="false" />
 			</column>
 		</createTable>
@@ -226,6 +254,12 @@
 	<changeSet id="2015-07-29_03" author="apodoba">
 		<sql>
 			CREATE SEQUENCE PRIORITY_SEQ START WITH 1000;
+		</sql>
+	</changeSet>
+	
+	<changeSet id="2015-08-25_02" author="apodoba">
+		<sql>
+			CREATE SEQUENCE ROLE_SEQ START WITH 1000;
 		</sql>
 	</changeSet>
 

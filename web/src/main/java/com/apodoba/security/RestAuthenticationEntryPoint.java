@@ -3,6 +3,7 @@ package com.apodoba.security;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,11 +15,15 @@ import org.springframework.stereotype.Component;
 public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
 	@Override
-	public void commence(HttpServletRequest request,
-			HttpServletResponse response, AuthenticationException authException)
+	public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException)
 			throws IOException, ServletException {
+		Cookie[] cookies = request.getCookies();
+		for (int i = 0; i < cookies.length; ++i) {
+			if (cookies[i].getName().equals("AUTORIZE")) {
+				request.logout();
+			}
+		}
 		response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
-
 	}
 
 }

@@ -1,5 +1,5 @@
 // create the module and name it joraApp
-var joraApp = angular.module('joraApp', ['ngRoute']);
+var joraApp = angular.module('joraApp', ['ngRoute', 'ngCookies']);
 
 // configure our routes
 joraApp.config(function($routeProvider, $httpProvider) {
@@ -50,8 +50,7 @@ joraApp.value('redirectToUrlAfterLogin', { url: '/' });
 joraApp.factory('loginService', function($location, redirectToUrlAfterLogin) {
     return {
         redirectToLogin: function(status) {
-        	debugger
-        	if(status === 401) {
+        	if(status === 401 || status === 403) {
         		if($location.path().toLowerCase() != '/login') {
         			redirectToUrlAfterLogin.url = $location.path();
         		}else {
@@ -61,21 +60,18 @@ joraApp.factory('loginService', function($location, redirectToUrlAfterLogin) {
         	}
         },
         redirectAfterLogin: function() {
-        	debugger
 			$location.path(redirectToUrlAfterLogin.url);
         },
         logout: function() {
-        	debugger
+        	redirectToUrlAfterLogin.url = $location.path();
 			$location.path("/login");
         }
     };
 });
 
 
-joraApp.controller('mainController', [ '$scope', '$http', 'loginService',
-		function($scope, $http, loginService) {
+joraApp.controller('mainController', function($scope, $http, loginService) {
 			$scope.message = $scope.count + 1;
-			$scope.message = 'Everyone come and see how good I look!';
 			$http({
 				method : 'GET',
 				url : '/web/t/tickets',
@@ -92,11 +88,10 @@ joraApp.controller('mainController', [ '$scope', '$http', 'loginService',
 		        url: "/web/logout"
 		        })
 		        .success(function(data, status, headers, config) {
-		        	debugger
 		        	loginService.logout();
 		    	});
-			}
-}]);
+			};
+});
 			
 
 joraApp.controller('usersController', function($scope) {
@@ -107,8 +102,7 @@ joraApp.controller('adminController', function($scope) {
 	$scope.message = 'Look! I am an admin page.';
 });
 
-joraApp.controller('loginController', function($scope, $http, loginService) {
-	$scope.message = 'Look! I am an login page.';
+joraApp.controller('loginController', function($scope, $http, loginService, $cookies, $browser) {
 	$scope.login = function(){
 		$http({
         method: "POST",
@@ -118,9 +112,12 @@ joraApp.controller('loginController', function($scope, $http, loginService) {
        	 username: $scope.credentials.username,
         }})
         .success(function(data, status, headers, config) {
-        	debugger
-        	loginService.redirectAfterLogin();
-        	$scope.error = false;
+        	if($cookies.get('AUTORIZE')){
+        		loginService.redirectAfterLogin();
+            	$scope.error = false;
+        	}else {
+        		$scope.error = true;
+        	}
     	})
     	.error(function(data, status, headers, config) {
     		console.log("error login", status);
@@ -130,8 +127,7 @@ joraApp.controller('loginController', function($scope, $http, loginService) {
 });
 
 
-joraApp.controller('ticketController', [ '$scope', '$routeParams', '$http',  '$location', 'loginService',
-		function($scope, $routeParams, $http, $location, $cookies, loginService) {
+joraApp.controller('ticketController', function($scope, $routeParams, $http, $location, $cookies, loginService) {
 			$scope.ticketId = $routeParams.ticketId;
 			$http({
 				method : 'GET',
@@ -173,4 +169,4 @@ joraApp.controller('ticketController', [ '$scope', '$routeParams', '$http',  '$l
 					icon.addClass("glyphicon-hand-up");
 				}
 			};
-		} ]);
+		});

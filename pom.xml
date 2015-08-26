@@ -28,6 +28,7 @@
     <derby.version>10.10.1.1</derby.version>
     <jackson.version>2.6.0</jackson.version>
     <jackson-annotations.version>2.6.0</jackson-annotations.version>
+    <javax.servlet>3.1.0</javax.servlet>
   </properties>
 
   <dependencyManagement>
@@ -161,6 +162,13 @@
 			<artifactId>spring-security-taglibs</artifactId>
 			<version>${spring-security.version}</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>${javax.servlet}</version>
+		</dependency>
+		
 	</dependencies>
   </dependencyManagement>
 

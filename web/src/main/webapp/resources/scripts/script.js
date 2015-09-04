@@ -1,5 +1,5 @@
 // create the module and name it joraApp
-var joraApp = angular.module('joraApp', ['ngRoute', 'ngCookies']);
+var joraApp = angular.module('joraApp', ['ngRoute', 'ngCookies', 'ui.bootstrap', 'oi.select']);
 
 // configure our routes
 joraApp.config(function($routeProvider, $httpProvider) {
@@ -28,6 +28,11 @@ joraApp.config(function($routeProvider, $httpProvider) {
 	.when('/t/ticket/:ticketId', {
 		templateUrl : 'resources/views/ticket.html',
 		controller : 'ticketController'
+	})
+	
+	.when('/t/edit/ticket/:ticketId', {
+		templateUrl : 'resources/views/edit_ticket.html',
+		controller : 'editTicketController'
 	})
 
 	.when('/admin', {
@@ -64,13 +69,12 @@ joraApp.factory('loginService', function($location, redirectToUrlAfterLogin) {
         },
         logout: function() {
         	redirectToUrlAfterLogin.url = $location.path();
-			$location.path("/login");
         }
     };
 });
 
 
-joraApp.controller('mainController', function($scope, $http, loginService) {
+joraApp.controller('mainController', function($scope, $http, loginService, $location, $modal) {
 			$scope.message = $scope.count + 1;
 			$http({
 				method : 'GET',
@@ -91,15 +95,142 @@ joraApp.controller('mainController', function($scope, $http, loginService) {
 		        	loginService.logout();
 		    	});
 			};
+			
+			$scope.editTicket = function(ticketId){
+				$location.path("/t/edit/ticket/"+ticketId);
+			};
+			
+			$scope.open = function (ticket) {
+			  var modalInstance = $modal.open({
+			    templateUrl: 'resources/views/edit_ticket.html',
+				scope: $scope,
+				controller: EditTicketController,
+				resolve: {
+					tickets: function(){
+						return $scope.tickets;
+					},
+				    ticket: function(){
+				        return ticket;
+				    }
+				}
+			  });
+			}
 });
 			
+var EditTicketController = function ($scope, $modalInstance, ticket, tickets) {
+	
+	$.ajax({
+	    xhrFields: {
+	        withCredentials: true
+	    },
+	    type: "GET",
+	    url: "/web/type/types",
+	    async: false,
+	    success :  function(data) {
+	    	$scope.types = data;
+        },
+        error: function(data) {
+        	loginService.redirectToLogin(status);
+        }
+	});
+	
+	$.ajax({
+	    xhrFields: {
+	        withCredentials: true
+	    },
+	    type: "GET",
+	    url: "/web/type/statuses",
+	    async: false,
+	    success :  function(data) {
+	    	$scope.statuses = data;
+        },
+        error: function(data) {
+        	loginService.redirectToLogin(status);
+        }
+	});
+	
+	$.ajax({
+	    xhrFields: {
+	        withCredentials: true
+	    },
+	    type: "GET",
+	    url: "/web/type/priorities",
+	    async: false,
+	    success :  function(data) {
+	    	$scope.priorities = data;
+        },
+        error: function(data) {
+        	loginService.redirectToLogin(status);
+        }
+	});
+	
+	$.ajax({
+	    xhrFields: {
+	        withCredentials: true
+	    },
+	    type: "GET",
+	    url: "/web/t/ticket/" + ticket.id,
+	    async: false,
+	    success :  function(data) {
+	    	$scope.ticket = data;
+        },
+        error: function(data) {
+        	loginService.redirectToLogin(status);
+        }
+	});
+	
+	$.ajax({
+	    xhrFields: {
+	        withCredentials: true
+	    },
+	    type: "GET",
+	    url: "/web/user/users/",
+	    async: false,
+	    success :  function(data) {
+	    	$scope.users = data;
+        },
+        error: function(data) {
+        	loginService.redirectToLogin(status);
+        }
+	});
+	
+	 $scope.tickets = tickets;
+	 
+	 $scope.save = function () {
+		 $.ajax({
+			    xhrFields: {
+			        withCredentials: true
+			    },
+			    type: "POST",
+			    url: "/web/t/edit/",
+			    async: false,
+			    data: JSON.stringify($scope.ticket),
+			    contentType: "application/json; charset=utf-8",
+			    dataType: "json",
+		        success: function(data){
+		        	alert(data);
+		        },
+		        failure: function(errMsg) {
+		            alert(errMsg);
+		        }
+			});
+		 $modalInstance.close();
+	 };
 
+	 $scope.cancel = function () {
+		$modalInstance.dismiss('cancel');
+	 };
+}
 joraApp.controller('usersController', function($scope) {
 	$scope.message = 'Look! I am an user page.';
 });
 
 joraApp.controller('adminController', function($scope) {
 	$scope.message = 'Look! I am an admin page.';
+});
+
+joraApp.controller('editTicketController', function($scope) {
+	$scope.message = 'Look! I am an user page.';
 });
 
 joraApp.controller('loginController', function($scope, $http, loginService, $cookies, $browser) {

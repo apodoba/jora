@@ -101,6 +101,10 @@
 				<constraints nullable="false" foreignKeyName="FK_STATUS_ID"
 					references="STATUS(ID)" />
 			</column>
+			<column name="PARENT_TICKET" type="integer">
+				<constraints nullable="false" foreignKeyName="FK_PARENT_TICKET_ID"
+					references="TICKET(ID)" />
+			</column>
 			<column name="CREATED_EMPLOYEE" type="integer">
 				<constraints nullable="false" foreignKeyName="FK_CREATED_EMPLOYEE_ID"
 					references="EMPLOYEE(ID)" />
@@ -158,9 +162,10 @@
 		</createTable>
 	</changeSet>
 
-	<changeSet id="25-03-2014_6" author="apodoba">
+
+	<!-- <changeSet id="25-03-2014_6" author="apodoba">
 		<createTable tableName="HIERARCHY">
-			<column name="ID" type="int">
+			<column name="ID" type="int" autoIncrement="true" >
 				<constraints primaryKey="true" nullable="false" />
 			</column>
 			<column name="TICKET" type="integer">
@@ -172,11 +177,12 @@
 					references="TICKET(ID)" />
 			</column>
 		</createTable>
-	</changeSet>
+	</changeSet> -->
+
 
 	<changeSet id="25-03-2014_7" author="apodoba">
 		<createTable tableName="RELATIONS">
-			<column name="ID" type="int">
+			<column name="ID" type="int" autoIncrement="true">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
 			<column name="TICKET" type="integer">

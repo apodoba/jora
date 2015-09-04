@@ -1,0 +1,81 @@
+<div class="modal-content">
+	<div class="modal-header" style="background-color: #c8e5fb;">
+		<button type="button" class="close" ng-click="cancel()">&times;</button>
+		<h4 class="modal-title">Edit {{ticket.name}}</h4>
+	</div>
+	<div class="modal-body">
+		<form class="form-horizontal">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">Type:</label>
+				<div class="col-sm-9">
+					<select ng-model="ticket.type" class="form-control" style="width: 30%;"
+						ng-options="type as type.type for type in types track by type.id">
+						<option ng-hide="ticket.type" value="">-- Select Type --</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">Priority:</label>
+				<div class="col-sm-9">
+					<select ng-model="ticket.priority" class="form-control" style="width: 30%;"
+						ng-options="priority as priority.priority for priority in priorities track by priority.id">
+						<option ng-hide="ticket.priority" value="">-- Select Type --</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">Status:</label>
+				<div class="col-sm-9">
+					<select ng-model="ticket.status" class="form-control" style="width: 30%;"
+						ng-options="status as status.status for status in statuses track by status.id">
+						<option ng-hide="ticket.status" value="" ng-model="ticket.description">-- Select Type --</option>
+					</select>
+				</div>
+			</div>
+			<hr>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">Environment:</label>
+				<div class="col-sm-9" >
+					<textarea rows="2" style="width: 100%;border: 1px solid #ccc; border-radius: 4px;color: #545252;" ng-model="ticket.environment">{{ ticket.environment }}</textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">Description:</label>
+				<div class="col-sm-9">
+					<textarea rows="4" style="width: 100%;border: 1px solid #ccc; border-radius: 4px;color: #545252;" ng-model="ticket.description">{{ ticket.description }}</textarea>
+				</div>
+			</div>
+			<hr>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">Parent task:</label>
+				<div class="col-sm-9">
+					<input type="text" ng-model="ticket.parent" typeahead="parent as parent.name for parent in tickets | filter:$viewValue | limitTo:8" 
+					class="form-control">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">Sub tasks:</label>
+				<div class="col-sm-9">
+					<oi-select oi-options="item.name for item in tickets track by item.id" ng-model="ticket.children" multiple placeholder="Select"></oi-select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">Related tasks:</label>
+				<div class="col-sm-9">
+					<oi-select oi-options="item.name for item in tickets track by item.id" ng-model="ticket.relatedTickets" multiple placeholder="Select"></oi-select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">Assign user:</label>
+				<div class="col-sm-9">
+					<input type="text" ng-model="ticket.assignUser" typeahead="user as user.firstName+' '+user.lastName for user in users | filter:$viewValue | limitTo:8" 
+					class="form-control">
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer" style="background-color: #c8e5fb;">
+		<button type="button" class="btn btn-default btn-sm" ng-click="save()" style="font-size: medium;">Save</button>
+		<button type="button" class="btn btn-default btn-sm" ng-click="cancel()" style="font-size: medium;">Close</button>
+	</div>
+</div>

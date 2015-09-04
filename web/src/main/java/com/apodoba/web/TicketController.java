@@ -4,12 +4,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.apodoba.dao.TimeLogDao;
+import com.apodoba.domain.Ticket;
 import com.apodoba.dto.CommentDto;
 import com.apodoba.dto.TicketFullDto;
 import com.apodoba.dto.TicketMainDto;
@@ -30,9 +31,6 @@ public class TicketController {
 
 	@Autowired
 	private TimeLogService timeLogService;
-
-	@Autowired
-	private TimeLogDao timeLogDao;
 
 	@RequestMapping(value = "/tickets", method = RequestMethod.GET)
 	public @ResponseBody List<TicketMainDto> getAllTickets() {
@@ -56,6 +54,13 @@ public class TicketController {
 	public @ResponseBody long getAllLogTimeForTicket(@PathVariable Long ticketId) {
 		long minutes = timeLogService.getTimeLogByTicket(ticketId);
 		return minutes;
+	}
+	
+	
+	@RequestMapping(value = "/edit", method = RequestMethod.POST)
+	public void editTicket(@RequestBody TicketFullDto ticketFullDto) {
+		Ticket ticket = TicketFullDto.toEntity(ticketFullDto);
+		ticketService.updateTicket(ticket);
 	}
 
 }

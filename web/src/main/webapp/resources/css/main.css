@@ -40,3 +40,11 @@ table.small-details tr {
 	.table tbody>tr>td, .table tfoot>tr>td {
 	border-top: white !important;
 }
+
+.modal .modal-dialog {
+	margin-top: 5%;
+}
+.modal-footer {
+    padding: 10px 20px 10px;
+    margin-top: 0;
+}

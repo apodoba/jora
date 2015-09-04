@@ -18,6 +18,7 @@ public class UserDto implements Serializable {
 	private String password;
 	private String position;
 	private Role role;
+	private int version;
 
 	public Long getId() {
 		return id;
@@ -75,6 +76,14 @@ public class UserDto implements Serializable {
 		this.role = role;
 	}
 
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
+
 	public static UserDto toDTO(User dbUser) {
 		UserDto userDto = new UserDto();
 		userDto.setId(dbUser.getId());
@@ -85,5 +94,17 @@ public class UserDto implements Serializable {
 		userDto.setRole(dbUser.getRole());
 		userDto.setPosition(dbUser.getPosition());
 		return userDto;
+	}
+	
+	public static User toEntity(UserDto user) {
+		User userEntity = new User();
+		userEntity.setId(user.getId());
+		userEntity.setEmail(user.getEmail());
+		userEntity.setFirstName(user.getFirstName());
+		userEntity.setLastName(user.getLastName());
+		userEntity.setPassword(user.getPassword());
+		userEntity.setRole(user.getRole());
+		userEntity.setPosition(user.getPosition());
+		return userEntity;
 	}
 }

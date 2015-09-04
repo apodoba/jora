@@ -9,6 +9,7 @@ import com.apodoba.domain.Priority;
 import com.apodoba.domain.Status;
 import com.apodoba.domain.Ticket;
 import com.apodoba.domain.Type;
+import com.apodoba.domain.User;
 
 public class TicketFullDto implements Serializable{
 
@@ -33,6 +34,7 @@ public class TicketFullDto implements Serializable{
 	private int estimate;
 	private Date created;
 	private Date updated;
+	private int version;
 
 	public Long getId() {
 		return id;
@@ -161,7 +163,15 @@ public class TicketFullDto implements Serializable{
 	public void setUpdated(Date updated) {
 		this.updated = updated;
 	}
+	
+	public int getVersion() {
+		return version;
+	}
 
+	public void setVersion(int version) {
+		this.version = version;
+	}
+	
 	public static TicketFullDto toDTO(Ticket dbTicket){
 		TicketFullDto ticket = new TicketFullDto();
 		ticket.setAssignUser(dbTicket.getAssignUser() != null ? UserDto.toDTO(dbTicket.getAssignUser()) : new UserDto());
@@ -190,6 +200,41 @@ public class TicketFullDto implements Serializable{
 			related.add(TicketMainDto.toDTO(ticketChild));
 		}
 		ticket.setChildren(related);
+		ticket.setVersion(dbTicket.getVersion());
+		
+		return ticket;
+	}
+	
+	
+	public static Ticket toEntity(TicketFullDto ticketFullDto){
+		Ticket ticket = new Ticket();
+		ticket.setAssignUser(ticketFullDto.getAssignUser() != null ? UserDto.toEntity(ticketFullDto.getAssignUser()) : new User());
+		ticket.setCreatedUser(UserDto.toEntity(ticketFullDto.getCreatedUser()));
+		ticket.setDescription(ticketFullDto.getDescription());
+		ticket.setId(ticketFullDto.getId());
+		ticket.setName(ticketFullDto.getName());
+		ticket.setParent(ticketFullDto.getParent() != null ? TicketMainDto.toEntity(ticketFullDto.getParent()) : null);
+		ticket.setPriority(ticketFullDto.getPriority());
+		ticket.setStatus(ticketFullDto.getStatus());
+		ticket.setType(ticketFullDto.getType());
+		ticket.setCreated(ticketFullDto.getCreated());
+		ticket.setEnvironment(ticketFullDto.getEnvironment());
+		ticket.setEstimate(ticketFullDto.getEstimate());
+		ticket.setUpdated(ticketFullDto.getUpdated());
+		ticket.setResolution(ticketFullDto.getResolution());
+		
+		Set<Ticket> related = new HashSet<Ticket>();
+		for(TicketMainDto ticketChild: ticketFullDto.getRelatedTickets()){
+			related.add(TicketMainDto.toEntity(ticketChild));
+		}
+		ticket.setRelatedTickets(related);
+		
+		related = new HashSet<Ticket>();
+		for(TicketMainDto ticketChild: ticketFullDto.getChildren()){
+			related.add(TicketMainDto.toEntity(ticketChild));
+		}
+		ticket.setChildren(related);
+		ticket.setVersion(ticketFullDto.getVersion());
 		
 		return ticket;
 	}

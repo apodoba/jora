@@ -23,7 +23,7 @@ public class AppTest{
     
     @Test
     public void getTicketsCount(){
-        Assert.assertEquals(5, testDao.getTicketsCount());
+        Assert.assertEquals(8, testDao.getTicketsCount());
     }
     
     @Test

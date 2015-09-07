@@ -49,27 +49,25 @@
 			<div class="form-group">
 				<label class="col-sm-3 control-label">Parent task:</label>
 				<div class="col-sm-9">
-					<input type="text" ng-model="ticket.parent" typeahead="parent as parent.name for parent in tickets | filter:$viewValue | limitTo:8" 
-					class="form-control">
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-3 control-label">Sub tasks:</label>
-				<div class="col-sm-9">
-					<oi-select oi-options="item.name for item in tickets track by item.id" ng-model="ticket.children" multiple placeholder="Select"></oi-select>
+					<oi-select oi-options="item.name disable when contains(item, ticket.children) || item.name==ticket.name for item in tickets track by item.id | limitTo: 6" ng-model="ticket.parent" 
+						oi-select-options="{listFilter: 'oiSelectAscSort:[\'name\']'}" placeholder="Select">
+					</oi-select>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-sm-3 control-label">Related tasks:</label>
 				<div class="col-sm-9">
-					<oi-select oi-options="item.name for item in tickets track by item.id" ng-model="ticket.relatedTickets" multiple placeholder="Select"></oi-select>
+					<oi-select oi-options="item.name disable when item.name==ticket.name for item in tickets track by item.id | limitTo: 6" ng-model="ticket.relatedTickets" 
+						oi-select-options="{listFilter: 'oiSelectAscSort:[\'name\']'}" multiple placeholder="Select">
+					</oi-select>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-sm-3 control-label">Assign user:</label>
 				<div class="col-sm-9">
-					<input type="text" ng-model="ticket.assignUser" typeahead="user as user.firstName+' '+user.lastName for user in users | filter:$viewValue | limitTo:8" 
-					class="form-control">
+					<oi-select oi-options="item.firstName+' '+item.lastName for item in users track by item.id | limitTo: 6" ng-model="ticket.assignUser" 
+						oi-select-options="{listFilter: 'oiSelectAscSort:[\'firstName\', \'lastName\']'}" placeholder="Select">
+					</oi-select>
 				</div>
 			</div>
 		</form>

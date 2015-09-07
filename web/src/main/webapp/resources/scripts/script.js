@@ -96,11 +96,7 @@ joraApp.controller('mainController', function($scope, $http, loginService, $loca
 		    	});
 			};
 			
-			$scope.editTicket = function(ticketId){
-				$location.path("/t/edit/ticket/"+ticketId);
-			};
-			
-			$scope.open = function (ticket) {
+			$scope.editTicket = function (ticket) {
 			  var modalInstance = $modal.open({
 			    templateUrl: 'resources/views/edit_ticket.html',
 				scope: $scope,
@@ -114,6 +110,30 @@ joraApp.controller('mainController', function($scope, $http, loginService, $loca
 				    }
 				}
 			  });
+			  
+			  modalInstance.result.then(function (result) {
+				  if(result == "success"){
+					  $.ajax({
+						    xhrFields: {
+						        withCredentials: true
+						    },
+						    type: "GET",
+						    url: "/web/t/tickets",
+						    async: false,
+						    success :  function(data) {
+						    	$scope.tickets = data;
+					        },
+					        error: function(data) {
+					        	loginService.redirectToLogin(status);
+					        }
+						});
+					  $scope.success = "Ticket was successfully updated";
+				  }else{
+					  $scope.error = "Error occurred during update";
+				  }
+		      }, function () {
+		    	  console.info('Modal dismissed at: ' + new Date());
+		      });
 			}
 });
 			
@@ -186,7 +206,7 @@ var EditTicketController = function ($scope, $modalInstance, ticket, tickets) {
 	    type: "GET",
 	    url: "/web/user/users/",
 	    async: false,
-	    success :  function(data) {
+	    success:  function(data) {
 	    	$scope.users = data;
         },
         error: function(data) {
@@ -195,6 +215,15 @@ var EditTicketController = function ($scope, $modalInstance, ticket, tickets) {
 	});
 	
 	 $scope.tickets = tickets;
+	 
+	 $scope.contains = function (item, items) {
+		 for(var i=0; i<items.length; i++){
+			 if(items[i].id == item.id){
+				 return true;
+			 }
+		 }
+		 return false;
+	 };
 	 
 	 $scope.save = function () {
 		 $.ajax({
@@ -206,15 +235,15 @@ var EditTicketController = function ($scope, $modalInstance, ticket, tickets) {
 			    async: false,
 			    data: JSON.stringify($scope.ticket),
 			    contentType: "application/json; charset=utf-8",
-			    dataType: "json",
-		        success: function(data){
-		        	alert(data);
-		        },
-		        failure: function(errMsg) {
-		            alert(errMsg);
-		        }
+			    success: function(data, textStatus, jqXHR){
+		        	$scope.result = "success";
+			    },
+			    error: function (jqXHR, textStatus, errorThrown){
+		        	$scope.result = "error";
+			    }
 			});
-		 $modalInstance.close();
+
+		 $modalInstance.close($scope.result);
 	 };
 
 	 $scope.cancel = function () {
@@ -251,7 +280,6 @@ joraApp.controller('loginController', function($scope, $http, loginService, $coo
         	}
     	})
     	.error(function(data, status, headers, config) {
-    		console.log("error login", status);
     		$scope.error = true;
     	});
 	}

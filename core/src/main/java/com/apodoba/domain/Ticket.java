@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -60,24 +61,14 @@ public class Ticket implements Serializable{
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ASSIGN_EMPLOYEE", nullable = false)
 	private User assignUser;
-
 	
 	@ManyToOne
 	@JoinColumn(name = "PARENT_TICKET")
 	public Ticket parent;
 	
-	@ManyToMany
-	@JoinTable(name = "TICKET", joinColumns = { @JoinColumn(name = "PARENT_TICKET") }, inverseJoinColumns = { @JoinColumn(name = "ID") })
+	@OneToMany(mappedBy = "parent")
 	private Set<Ticket> children;
-	
-	/*@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "HIERARCHY", joinColumns = { @JoinColumn(name = "PARENT") }, inverseJoinColumns = { @JoinColumn(name = "TICKET") })
-	private Set<Ticket> children;
-	
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinTable(name = "HIERARCHY", joinColumns = { @JoinColumn(name = "TICKET") }, inverseJoinColumns = { @JoinColumn(name = "PARENT") })
-	private Ticket parent;*/
-	
+
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "RELATIONS", joinColumns = { @JoinColumn(name = "TICKET") }, inverseJoinColumns = { @JoinColumn(name = "RELATED") })
 	private Set<Ticket> relatedTickets;

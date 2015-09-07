@@ -20,6 +20,6 @@ public class Test{
     
     @org.junit.Test
     public void getTicketsCount(){
-        Assert.assertEquals(5, testService.getAllTickets().size());
+        Assert.assertEquals(8, testService.getAllTickets().size());
     }
 }

@@ -110,7 +110,7 @@
 				</div>
 
 				<!-- Sub Tasks -->
-				<div ng-if="ticket.children" class="container"
+				<div ng-if="ticket.children.length > 0" class="container"
 					style="background-color: white;">
 					<hr>
 					<button type="button" class="btn-sm"
@@ -139,7 +139,7 @@
 				</div>
 
 				<!-- Related Tasks -->
-				<div ng-if="ticket.relatedTickets" class="container"
+				<div ng-if="ticket.relatedTickets.length > 0" class="container"
 					style="background-color: white;">
 					<hr>
 					<button type="button" class="btn-sm"

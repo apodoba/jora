@@ -102,7 +102,7 @@
 					references="STATUS(ID)" />
 			</column>
 			<column name="PARENT_TICKET" type="integer">
-				<constraints nullable="false" foreignKeyName="FK_PARENT_TICKET_ID"
+				<constraints nullable="true" foreignKeyName="FK_PARENT_TICKET_ID"
 					references="TICKET(ID)" />
 			</column>
 			<column name="CREATED_EMPLOYEE" type="integer">

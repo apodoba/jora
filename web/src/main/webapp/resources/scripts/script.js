@@ -58,17 +58,16 @@ joraApp.factory('loginService', function($location, redirectToUrlAfterLogin) {
         	if(status === 401 || status === 403) {
         		if($location.path().toLowerCase() != '/login') {
         			redirectToUrlAfterLogin.url = $location.path();
-        		}else {
-        			redirectToUrlAfterLogin.url = '/';
         		}
         		$location.path("/login");
         	}
         },
         redirectAfterLogin: function() {
-			$location.path(redirectToUrlAfterLogin.url);
+			$location.path(redirectToUrlAfterLogin.url == '/login' ? '/' : redirectToUrlAfterLogin.url);
         },
         logout: function() {
         	redirectToUrlAfterLogin.url = $location.path();
+        	$location.path("/login");
         }
     };
 });

@@ -1,12 +1,14 @@
 package com.apodoba.dao;
 
-import com.apodoba.domain.User;
+import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import com.apodoba.domain.User;
 
 /**
  * Created by apodoba on 4/7/14.
@@ -26,5 +28,12 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public User getUserById(Long id) {
 		return (User) sessionFactory.getCurrentSession().get(User.class, id);
+	}
+
+	@Override
+	public User getUserByEmail(String mail) {
+		Criteria userCriteria = sessionFactory.getCurrentSession().createCriteria(User.class);
+		userCriteria.add(Restrictions.eq("email", mail));
+    	return (User) userCriteria.uniqueResult();
 	}
 }

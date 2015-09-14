@@ -209,7 +209,7 @@ public class TicketFullDto implements Serializable{
 	public static Ticket toEntity(TicketFullDto ticketFullDto){
 		Ticket ticket = new Ticket();
 		ticket.setAssignUser(ticketFullDto.getAssignUser() != null ? UserDto.toEntity(ticketFullDto.getAssignUser()) : new User());
-		ticket.setCreatedUser(UserDto.toEntity(ticketFullDto.getCreatedUser()));
+		ticket.setCreatedUser(ticketFullDto.getCreatedUser() != null ? UserDto.toEntity(ticketFullDto.getCreatedUser()) : new User());
 		ticket.setDescription(ticketFullDto.getDescription());
 		ticket.setId(ticketFullDto.getId());
 		ticket.setName(ticketFullDto.getName());
@@ -224,18 +224,20 @@ public class TicketFullDto implements Serializable{
 		ticket.setResolution(ticketFullDto.getResolution());
 		
 		Set<Ticket> related = new HashSet<Ticket>();
-		for(TicketMainDto ticketChild: ticketFullDto.getRelatedTickets()){
-			related.add(TicketMainDto.toEntity(ticketChild));
+		if(ticketFullDto.getRelatedTickets() != null){
+			for(TicketMainDto ticketChild: ticketFullDto.getRelatedTickets()){
+				related.add(TicketMainDto.toEntity(ticketChild));
+			}
+			ticket.setRelatedTickets(related);
 		}
-		ticket.setRelatedTickets(related);
-		
 		related = new HashSet<Ticket>();
-		for(TicketMainDto ticketChild: ticketFullDto.getChildren()){
-			related.add(TicketMainDto.toEntity(ticketChild));
+		if(ticketFullDto.getChildren() != null){
+			for(TicketMainDto ticketChild: ticketFullDto.getChildren()){
+				related.add(TicketMainDto.toEntity(ticketChild));
+			}
+			ticket.setChildren(related);
+			ticket.setVersion(ticketFullDto.getVersion());
 		}
-		ticket.setChildren(related);
-		ticket.setVersion(ticketFullDto.getVersion());
-		
 		return ticket;
 	}
 

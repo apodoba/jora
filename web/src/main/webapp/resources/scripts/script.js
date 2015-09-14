@@ -131,12 +131,13 @@ joraApp.controller('mainController', function($scope, $http, loginService, $loca
 					  $scope.error = "Error occurred during update";
 				  }
 		      }, function () {
-		    	  console.info('Modal dismissed at: ' + new Date());
+		    	  console.info(new Date());
 		      });
-			}
+			};
 });
 			
 var EditTicketController = function ($scope, $modalInstance, ticket, tickets) {
+	$scope.action = ticket ? "edit" : "add";
 	
 	$.ajax({
 	    xhrFields: {
@@ -183,20 +184,22 @@ var EditTicketController = function ($scope, $modalInstance, ticket, tickets) {
         }
 	});
 	
-	$.ajax({
-	    xhrFields: {
-	        withCredentials: true
-	    },
-	    type: "GET",
-	    url: "/web/t/ticket/" + ticket.id,
-	    async: false,
-	    success :  function(data) {
-	    	$scope.ticket = data;
-        },
-        error: function(data) {
-        	loginService.redirectToLogin(status);
-        }
-	});
+	if(ticket){
+		$.ajax({
+			xhrFields: {
+				withCredentials: true
+			},
+			type: "GET",
+			url: "/web/t/ticket/" + ticket.id,
+			async: false,
+			success :  function(data) {
+				$scope.ticket = data;
+			},
+			error: function(data) {
+				loginService.redirectToLogin(status);
+			}
+		});
+	}
 	
 	$.ajax({
 	    xhrFields: {
@@ -216,13 +219,17 @@ var EditTicketController = function ($scope, $modalInstance, ticket, tickets) {
 	 $scope.tickets = tickets;
 	 
 	 $scope.contains = function (item, items) {
-		 for(var i=0; i<items.length; i++){
-			 if(items[i].id == item.id){
-				 return true;
+		 if(items){
+			 for(var i=0; i<items.length; i++){
+				 if(items[i].id == item.id){
+					 return true;
+				 }
 			 }
+			 return false;
 		 }
-		 return false;
 	 };
+	 
+	 var url = ticket ? "edit/" : "add/";
 	 
 	 $scope.save = function () {
 		 $.ajax({
@@ -230,7 +237,7 @@ var EditTicketController = function ($scope, $modalInstance, ticket, tickets) {
 			        withCredentials: true
 			    },
 			    type: "POST",
-			    url: "/web/t/edit/",
+			    url: "/web/t/"+url,
 			    async: false,
 			    data: JSON.stringify($scope.ticket),
 			    contentType: "application/json; charset=utf-8",

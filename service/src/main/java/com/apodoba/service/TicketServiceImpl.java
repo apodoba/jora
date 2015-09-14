@@ -1,6 +1,7 @@
 package com.apodoba.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class TicketServiceImpl implements TicketService{
 
 	@Override
 	public boolean createTicket(Ticket newTicket) {
+		newTicket.setCreated(new Date());
+		newTicket.setUpdated(new Date());
+		newTicket.setResolution("Unresolved");
 		return ticketDao.addTicket(newTicket);
 	}
 
@@ -41,6 +45,7 @@ public class TicketServiceImpl implements TicketService{
 
 	@Override
 	public void updateTicket(Ticket ticket) {
+		ticket.setUpdated(new Date());
 		ticketDao.updateTicket(ticket);
 	}
 

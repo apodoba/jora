@@ -3,6 +3,9 @@ package com.apodoba.web;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +20,7 @@ import com.apodoba.dto.TicketMainDto;
 import com.apodoba.service.CommentService;
 import com.apodoba.service.TicketService;
 import com.apodoba.service.TimeLogService;
+import com.apodoba.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 @RestController
@@ -31,6 +35,9 @@ public class TicketController {
 
 	@Autowired
 	private TimeLogService timeLogService;
+	
+	@Autowired
+	private UserService userService;
 
 	@RequestMapping(value = "/tickets", method = RequestMethod.GET)
 	public @ResponseBody List<TicketMainDto> getAllTickets() {
@@ -56,11 +63,21 @@ public class TicketController {
 		return minutes;
 	}
 	
-	
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	public void editTicket(@RequestBody TicketFullDto ticketFullDto) {
 		Ticket ticket = TicketFullDto.toEntity(ticketFullDto);
 		ticketService.updateTicket(ticket);
+	}
+	
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	public void addTicket(@RequestBody TicketFullDto ticketFullDto) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = (User) auth.getPrincipal();
+		com.apodoba.domain.User dbUser = userService.getUserByEmail(user.getUsername());
+		
+		Ticket ticket = TicketFullDto.toEntity(ticketFullDto);
+		ticket.setCreatedUser(dbUser);
+		ticketService.createTicket(ticket);
 	}
 
 }

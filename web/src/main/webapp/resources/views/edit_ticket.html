@@ -1,33 +1,39 @@
 <div class="modal-content">
 	<div class="modal-header" style="background-color: #c8e5fb;">
 		<button type="button" class="close" ng-click="cancel()">&times;</button>
-		<h4 class="modal-title">Edit {{ticket.name}}</h4>
+		<h4 class="modal-title">{{action=='add' ? 'Add':'Edit'}} {{ticket.name}}</h4>
 	</div>
 	<div class="modal-body">
 		<form class="form-horizontal">
-			<div class="form-group">
-				<label class="col-sm-3 control-label">Type:</label>
+			<div class="form-group" ng-show="action=='add'">
+				<label class="col-sm-3 control-label">Name*:</label>
 				<div class="col-sm-9">
-					<select ng-model="ticket.type" class="form-control" style="width: 30%;"
-						ng-options="type as type.type for type in types track by type.id">
+					<input ng-model="ticket.name" value="" ng-required="action=='add'" style="width: 40%;border: 1px solid #ccc; border-radius: 4px;color: #545252; height: 30px;">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">Type*:</label>
+				<div class="col-sm-9">
+					<select ng-model="ticket.type" class="form-control" style="width: 40%;"
+						ng-options="type as type.type for type in types track by type.id" ng-required="true">
 						<option ng-hide="ticket.type" value="">-- Select Type --</option>
 					</select>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-3 control-label">Priority:</label>
+				<label class="col-sm-3 control-label">Priority*:</label>
 				<div class="col-sm-9">
-					<select ng-model="ticket.priority" class="form-control" style="width: 30%;"
-						ng-options="priority as priority.priority for priority in priorities track by priority.id">
+					<select ng-model="ticket.priority" class="form-control" style="width: 40%;"
+						ng-options="priority as priority.priority for priority in priorities track by priority.id" ng-required="true">
 						<option ng-hide="ticket.priority" value="">-- Select Type --</option>
 					</select>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-3 control-label">Status:</label>
+				<label class="col-sm-3 control-label">Status*:</label>
 				<div class="col-sm-9">
-					<select ng-model="ticket.status" class="form-control" style="width: 30%;"
-						ng-options="status as status.status for status in statuses track by status.id">
+					<select ng-model="ticket.status" class="form-control" style="width: 40%;"
+						ng-options="status as status.status for status in statuses track by status.id" ng-required="true">
 						<option ng-hide="ticket.status" value="" ng-model="ticket.description">-- Select Type --</option>
 					</select>
 				</div>

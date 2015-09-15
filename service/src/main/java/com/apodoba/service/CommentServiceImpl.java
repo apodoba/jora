@@ -1,6 +1,7 @@
 package com.apodoba.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.apodoba.dao.CommentDao;
 import com.apodoba.domain.Comment;
+import com.apodoba.domain.User;
 import com.apodoba.dto.CommentDto;
+import com.apodoba.dto.TicketFullDto;
 
 @Service
 @Transactional
@@ -19,8 +22,16 @@ public class CommentServiceImpl implements CommentService {
 	private CommentDao commentDao;
 
 	@Override
-	public boolean addComment(Comment comment) {
-		return commentDao.addComment(comment);
+	public CommentDto addComment(String comment, User user, TicketFullDto ticket) {
+		Comment newComment = new Comment();
+		newComment.setComment(comment);
+		newComment.setDate(new Date());
+		newComment.setTicket(TicketFullDto.toEntity(ticket));
+		newComment.setUser(user);
+		
+		commentDao.addComment(newComment);
+		
+		return CommentDto.toDTO(newComment);
 	}
 
 	@Override
@@ -42,4 +53,9 @@ public class CommentServiceImpl implements CommentService {
 		return commentDao.getAllComments();
 	}
 
+	@Override
+	public void deleteComment(CommentDto comment) {
+		Comment dbComment = commentDao.getCommentById(comment.getId());
+		commentDao.deleteComment(dbComment);
+	}
 }

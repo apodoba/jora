@@ -13,6 +13,7 @@ import com.apodoba.domain.Ticket;
 import com.apodoba.domain.User;
 import com.apodoba.dto.TicketFullDto;
 import com.apodoba.dto.TicketMainDto;
+import com.apodoba.dto.UserDto;
 
 @Service
 @Transactional
@@ -22,7 +23,10 @@ public class TicketServiceImpl implements TicketService{
 	private TicketDao ticketDao;
 
 	@Override
-	public boolean createTicket(Ticket newTicket) {
+	public boolean createTicket(TicketFullDto ticket, User user) {
+		ticket.setCreatedUser(UserDto.toDTO(user));
+		
+		Ticket newTicket = TicketFullDto.toEntity(ticket);
 		newTicket.setCreated(new Date());
 		newTicket.setUpdated(new Date());
 		newTicket.setResolution("Unresolved");

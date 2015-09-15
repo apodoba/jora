@@ -20,13 +20,14 @@ public class CommentDaoImpl implements CommentDao{
 
 	@Override
 	public boolean addComment(Comment comment) {
-		return sessionFactory.getCurrentSession().save(comment) != null ? true: false;
+		Long id = (Long) sessionFactory.getCurrentSession().save(comment);
+		comment.setId(id);
+		return id != null ? true: false;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Comment> getAllCommentByTicket(long ticketId) {
-//		Ticket ticket = (Ticket) sessionFactory.getCurrentSession().get(Ticket.class, ticketId);
 		Criteria commentsCriteria = sessionFactory.getCurrentSession().createCriteria(Comment.class);
 		commentsCriteria.add(Restrictions.eq("ticket.id", ticketId));
 		return commentsCriteria.list();
@@ -50,5 +51,17 @@ public class CommentDaoImpl implements CommentDao{
 	@Override
 	public List<Comment> getAllComments() {
 		 return sessionFactory.getCurrentSession().createCriteria(Comment.class).list();
+	}
+
+	@Override
+	public void deleteComment(Comment comment) {
+		sessionFactory.getCurrentSession().delete(comment);
+	}
+
+	@Override
+	public Comment getCommentById(long id) {
+		Criteria commentsCriteria = sessionFactory.getCurrentSession().createCriteria(Comment.class);
+		commentsCriteria.add(Restrictions.eq("id", id));
+		return (Comment) commentsCriteria.uniqueResult();
 	}
 }

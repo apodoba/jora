@@ -334,4 +334,64 @@ joraApp.controller('ticketController', function($scope, $routeParams, $http, $lo
 					icon.addClass("glyphicon-hand-up");
 				}
 			};
+			
+			$scope.openNewComment = function() {
+				$scope.newComment = "";
+				$scope.openComment = true;
+			};
+			
+			$scope.cancel = function() {
+				$scope.openComment = false;
+			};
+			
+			$scope.addComment = function() {
+				var ticketComment = {};
+				ticketComment.comment = $scope.newComment;
+				ticketComment.ticket = $scope.ticket;
+				$http({
+			        method: "POST",
+			        url: "/web/t/add/comment",
+			        data: JSON.stringify(ticketComment),
+			       	headers: {
+			            'Content-Type': 'application/json'
+			       	}})
+			        .success(function(data, status, headers, config) {
+			        	$scope.comments.push(data)
+			        	$scope.success = "Comment successfully added";
+			        	$scope.openComment = false;
+			    	})
+			    	.error(function(data, status, headers, config) {
+			    		$scope.error = "Error occurred";
+			    	});
+			};
+			
+			$scope.deleteComment = function(comment) {
+				$http({
+			        method: "POST",
+			        url: "/web/t/delete/comment",
+			        data: JSON.stringify(comment),
+			       	headers: {
+			            'Content-Type': 'application/json'
+			       	}})
+			        .success(function(data, status, headers, config) {
+			        	if(data){
+			        		deleteCommentFromView(comment);
+			        		$scope.success = "Comment successfully deleted";
+			        	}else{
+			        		$scope.error = "Access denied";
+			        	}
+			    	})
+			    	.error(function(data, status, headers, config) {
+			    		$scope.error = "Error occurred";
+			    	});
+			};
+			
+			var deleteCommentFromView = function(comment){
+				for(var i=0; i<$scope.comments.length; i++){
+					 if($scope.comments[i].id == comment.id){
+						 $scope.comments.splice(i, 1);
+						 break;
+					 }
+				 }
+			};
 		});

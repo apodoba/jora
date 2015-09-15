@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.apodoba.domain.Ticket;
 import com.apodoba.dto.CommentDto;
+import com.apodoba.dto.TicketComment;
 import com.apodoba.dto.TicketFullDto;
 import com.apodoba.dto.TicketMainDto;
 import com.apodoba.service.CommentService;
@@ -74,10 +75,26 @@ public class TicketController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = (User) auth.getPrincipal();
 		com.apodoba.domain.User dbUser = userService.getUserByEmail(user.getUsername());
-		
-		Ticket ticket = TicketFullDto.toEntity(ticketFullDto);
-		ticket.setCreatedUser(dbUser);
-		ticketService.createTicket(ticket);
+		ticketService.createTicket(ticketFullDto, dbUser);
+	}
+	
+	@RequestMapping(value = "/add/comment", method = RequestMethod.POST)
+	public @ResponseBody CommentDto addComment(@RequestBody TicketComment ticketComment) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = (User) auth.getPrincipal();
+		com.apodoba.domain.User dbUser = userService.getUserByEmail(user.getUsername());
+		return commentService.addComment(ticketComment.getComment(), dbUser, ticketComment.getTicket());
+	}
+	
+	@RequestMapping(value = "/delete/comment", method = RequestMethod.POST)
+	public boolean deleteComment(@RequestBody CommentDto commentDto) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = (User) auth.getPrincipal();
+		if(user.getUsername().equals(commentDto.getUser().getEmail())){
+			commentService.deleteComment(commentDto);
+			return true;
+		}
+		return false;
 	}
 
 }

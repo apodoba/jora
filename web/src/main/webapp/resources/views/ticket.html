@@ -1,8 +1,16 @@
 <div class="container"
 	style="border: 1px solid #b7dbf9; padding-bottom: 20px;">
-
+	<div class="alert alert-success" ng-show="success">
+		<strong>Success!</strong> {{success}}
+	</div>
+	<div class="alert alert-danger" ng-show="error">
+		<strong>Error!</strong> {{error}}
+	</div>
 	<h1>{{ ticket.name }}</h1>
-
+	<button type="button" class="btn btn-default btn-sm" ng-click="openNewComment()">
+		<span class="glyphicon glyphicon-cloud" aria-hidden="true"></span>
+		Add comment
+	</button>
 
 	<div class="container" style="background-color: white;">
 		<div style="display: inline-flex;">
@@ -168,8 +176,7 @@
 				</div>
 
 				<!-- Comments -->
-				<div ng-if="comments.length > 0" class="container"
-					style="background-color: white;">
+				<div ng-if="comments.length > 0 || openComment" class="container" style="background-color: white;">
 					<hr>
 					<button type="button" class="btn-sm"
 						style="border: 0px; background-color: white; outline: none; width: 100%;"
@@ -184,13 +191,35 @@
 						style="margin: 10px">
 						<div ng-repeat="comment in comments">
 							<h5>
-								<span><a href="#">{{comment.user.name}}</a> added a
-									comment - {{comment.date | date:"MM/dd/yyyy 'at' h:mma"}}</span>
+								<span><a href="#">{{comment.user.firstName}} {{comment.user.lastName}}</a> 
+									added a comment - {{comment.date | date:"MM/dd/yyyy 'at' h:mma"}}
+									<button type="button" class="btn btn-default btn-sm" ng-click="deleteComment(comment)" style="float: right;border-color: white;padding: 2px;">
+										<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+									</button>
+								</span>
 							</h5>
 							<textarea style="width: 100%" readonly>{{comment.comment}}</textarea>
 							<hr>
 						</div>
 
+					</div>
+					<div class="container collapse in" style="margin: 10px" ng-show="openComment">
+						<div>
+							<h5>
+								<span>Add new comment</span>
+							</h5>
+							<textarea style="width: 100%;height: 80px;" ng-model="$parent.newComment" autofocus></textarea>
+							<div style="float: right;margin-top: 5px;">
+								<button type="button" class="btn btn-default btn-sm" ng-click="addComment()">
+									<span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
+									Save
+								</button>
+								<button type="button" class="btn btn-default btn-sm" ng-click="cancel()">
+									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+									Cancel
+								</button>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

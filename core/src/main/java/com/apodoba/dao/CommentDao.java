@@ -19,5 +19,9 @@ public interface CommentDao {
 	List<Comment> getAllCommentsByUser(User user);
 	
 	List<Comment> getAllComments();
+	
+	void deleteComment(Comment comment);
+	
+	Comment getCommentById(long id);
 
 }

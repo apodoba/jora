@@ -9,7 +9,7 @@ import com.apodoba.dto.TicketMainDto;
 
 public interface TicketService {
 	
-	boolean createTicket(Ticket newTicket);
+	boolean createTicket(TicketFullDto newTicket, User user);
 	
 	List<TicketMainDto> getAllTickets();
 	

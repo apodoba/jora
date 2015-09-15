@@ -68,4 +68,15 @@ public class CommentDto implements Serializable{
 		
 		return commentDto;
 	}
+	
+	public static Comment toEntity(CommentDto dtoComment){
+		Comment dbComment = new Comment();
+		dbComment.setUser(UserDto.toEntity(dtoComment.getUser()));
+		dbComment.setTicket(TicketMainDto.toEntity(dtoComment.getTicket()));
+		dbComment.setComment(dtoComment.getComment());
+		dbComment.setDate(dtoComment.getDate());
+		dbComment.setId(dtoComment.getId());
+		
+		return dbComment;
+	}
 }

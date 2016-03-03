@@ -6,21 +6,28 @@
 		http://www.springframework.org/schema/security/spring-security-4.0.xsd">
 
 	<http auto-config="true" use-expressions="true" entry-point-ref="restAuthenticationEntryPoint">
+	
 		<intercept-url pattern="/t/**" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')" />
 		<csrf disabled="true" />
 		<logout delete-cookies="AUTORIZE" />
-		<form-login authentication-success-handler-ref="redirectRoleStrategy"/>
+		<form-login authentication-success-handler-ref="authentificationSuccess" authentication-failure-handler-ref="authentificationFailure"/>
+		
 	</http>
+	
 	<authentication-manager alias="authenticationManager">
+	
 		<authentication-provider>
 			<password-encoder hash="sha"/>
 			<jdbc-user-service data-source-ref="dataSource" users-by-username-query="select email, password, enable from EMPLOYEE where email=?"
 				authorities-by-username-query="select empl.email, er.role from employee empl, role er where empl.role = er.id and empl.email =?" 
 				role-prefix="ROLE_" />
 		</authentication-provider>
+		
 	</authentication-manager>
 
-	<beans:bean id="redirectRoleStrategy" class="com.apodoba.security.RoleBasedAuthenticationSuccessHandler" />
+	<beans:bean id="authentificationSuccess" class="com.apodoba.security.RoleBasedAuthenticationSuccessHandler" />
+	
+	<beans:bean id="authentificationFailure" class="com.apodoba.security.RoleBaseAuthentificationFailureHandler" />
 
 	<beans:bean id="restAuthenticationEntryPoint" class="com.apodoba.security.RestAuthenticationEntryPoint" />
 

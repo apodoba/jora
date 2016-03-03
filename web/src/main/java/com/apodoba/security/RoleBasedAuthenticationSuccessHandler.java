@@ -15,8 +15,7 @@ public class RoleBasedAuthenticationSuccessHandler extends SavedRequestAwareAuth
 	
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request,
-			HttpServletResponse response, Authentication authentication) throws IOException,
-			ServletException {
+			HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
 		 	Cookie cookie = new Cookie("AUTORIZE", "true");
 		    response.addCookie(cookie);
 		    super.onAuthenticationSuccess(request, response, authentication);

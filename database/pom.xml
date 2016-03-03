@@ -81,27 +81,6 @@
                     </execution>
                 </executions>
             </plugin>
-<!-- 
-			<plugin>
-				<groupId>org.liquibase</groupId>
-				<artifactId>liquibase-plugin</artifactId>
-				<version>${liquibase.version}</version>
-				<executions>
-					<execution>
-						<phase>process-resources</phase>
-						<configuration>
-							<changeLogFile>${project.basedir}/src/main/structure/changelog.xml</changeLogFile>
-							<driver>${db.driverClassName}</driver>
-							<url>jdbc:derby://localhost:1527/${db.name};create=true</url>
-							<username>${db.username}</username>
-							<password>${db.password}</password>
-						</configuration>
-						<goals>
-							<goal>update</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin> -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>sql-maven-plugin</artifactId>

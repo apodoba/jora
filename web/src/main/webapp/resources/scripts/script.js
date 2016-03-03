@@ -1,9 +1,10 @@
 // create the module and name it joraApp
-var joraApp = angular.module('joraApp', ['ngRoute', 'ngCookies', 'ui.bootstrap', 'oi.select']);
+var joraApp = angular.module('joraApp', ['ngRoute', 'ui.bootstrap', 'oi.select']);
 
 // configure our routes
 joraApp.config(function($routeProvider, $httpProvider) {
 	$httpProvider.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
+	$httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
 	$httpProvider.defaults.withCredentials = true;
 	$httpProvider.defaults.transformRequest.unshift(function (data, headersGetter) {
 	    var key, result = [];
@@ -268,7 +269,7 @@ joraApp.controller('editTicketController', function($scope) {
 	$scope.message = 'Look! I am an user page.';
 });
 
-joraApp.controller('loginController', function($scope, $http, loginService, $cookies, $browser) {
+joraApp.controller('loginController', function($scope, $http, loginService, $browser) {
 	$scope.login = function(){
 		$http({
         method: "POST",
@@ -278,12 +279,7 @@ joraApp.controller('loginController', function($scope, $http, loginService, $coo
        	 username: $scope.credentials.username,
         }})
         .success(function(data, status, headers, config) {
-        	if($cookies.get('AUTORIZE')){
-        		loginService.redirectAfterLogin();
-            	$scope.error = false;
-        	}else {
-        		$scope.error = true;
-        	}
+        	loginService.redirectAfterLogin();
     	})
     	.error(function(data, status, headers, config) {
     		$scope.error = true;
@@ -292,7 +288,7 @@ joraApp.controller('loginController', function($scope, $http, loginService, $coo
 });
 
 
-joraApp.controller('ticketController', function($scope, $routeParams, $http, $location, $cookies, loginService) {
+joraApp.controller('ticketController', function($scope, $routeParams, $http, $location, loginService) {
 			$scope.ticketId = $routeParams.ticketId;
 			$http({
 				method : 'GET',
